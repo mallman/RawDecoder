@@ -4,10 +4,43 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>RawDecoder iOS Simulator.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>RawDecoder iOS.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>RawDecoder.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>4E578A052A897D5F002F7CE4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4E578A0D2A897D60002F7CE4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4EE929AE2A89BC450048D918</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4EE929D42A89C0830048D918</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

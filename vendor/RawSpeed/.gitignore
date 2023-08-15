@@ -1,0 +1,7 @@
+/RawSpeed
+/build-macOS
+/env-macOS.sh
+/build-iOS
+/env-iOS.sh
+/build-iOS_Simulator
+/env-iOS_Simulator.sh
