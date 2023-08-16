@@ -1,17 +1,14 @@
 #import <Foundation/Foundation.h>
-
 #import <RawDecoder/RDRawImage.h>
+#import <libraw.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LibRawRawImage: NSObject <RDRawImage>
-+ (LibRawRawImage * _Nullable)fromData:(const NSData *)data
-                                 error:(NSError * _Nullable *)error;
-
-+ (LibRawRawImage * _Nullable)fromFileURL:(const NSURL *)fileURL
-                                    error:(NSError * _Nullable *)error;
-
 - (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype _Nullable) initFromLibrawData:(libraw_data_t *)librawData
+                                        error:(NSError * _Nullable __autoreleasing *)error;
 @end
 
 #if __cplusplus

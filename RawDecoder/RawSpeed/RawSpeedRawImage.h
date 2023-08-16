@@ -2,24 +2,15 @@
 
 #import <RawDecoder/RDRawImage.h>
 
+#import <RawSpeed-API.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RawSpeedRawImage: NSObject <RDRawImage>
-+ (RawSpeedRawImage * _Nullable)fromData:(const NSData *)data
-                                   error:(NSError * _Nullable *)error;
-
-+ (RawSpeedRawImage * _Nullable)fromData:(const NSData *)data
-                        correctRawValues:(bool)correctRawValues
-                                   error:(NSError * _Nullable *)error;
-
-+ (RawSpeedRawImage * _Nullable)fromFileURL:(const NSURL *)fileURL
-                                      error:(NSError * _Nullable *)error;
-
-+ (RawSpeedRawImage * _Nullable)fromFileURL:(const NSURL *)fileURL
-                           correctRawValues:(bool)correctRawValues
-                                      error:(NSError * _Nullable *)error;
-
 - (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype _Nullable) initWithRawImage:(rawspeed::RawImage)rawImage
+                                      error:(NSError * _Nullable __autoreleasing *)error;
 @end
 
 #if __cplusplus

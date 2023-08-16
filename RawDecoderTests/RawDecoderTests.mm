@@ -10,7 +10,9 @@
 @implementation RawDecoderTests
 
 - (void) testD200RawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D200 Raw Image 1" withExtension:@"NEF"];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D200 Raw Image 1"
+                                                       withExtension:@"NEF"
+                                                         withDecoder:[RDRawSpeedDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 12);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -62,7 +64,7 @@
 - (void) testD200LibRaw {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D200 Raw Image 1"
                                                        withExtension:@"NEF"
-                                                         withLibrary:RDLibRaw];
+                                                         withDecoder:[RDLibRawDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 12);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -111,7 +113,9 @@
 }
 
 - (void) testD800ERawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D800E Raw Image 1" withExtension:@"NEF"];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D800E Raw Image 1"
+                                                       withExtension:@"NEF"
+                                                         withDecoder:[RDRawSpeedDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -163,7 +167,7 @@
 - (void) testD800ELibRaw {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D800E Raw Image 1"
                                                        withExtension:@"NEF"
-                                                         withLibrary:RDLibRaw];
+                                                         withDecoder:[RDLibRawDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -212,7 +216,9 @@
 }
 
 - (void) testD810RawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D810 Raw Image 1" withExtension:@"NEF"];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D810 Raw Image 1"
+                                                       withExtension:@"NEF"
+                                                         withDecoder:[RDRawSpeedDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -264,7 +270,7 @@
 - (void) testD810LibRaw {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D810 Raw Image 1"
                                                        withExtension:@"NEF"
-                                                         withLibrary:RDLibRaw];
+                                                         withDecoder:[RDLibRawDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -314,7 +320,8 @@
 
 - (void) testD850RawSpeed {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D850 Raw Image 1"
-                                                       withExtension:@"NEF"];
+                                                       withExtension:@"NEF"
+                                                         withDecoder:[RDRawSpeedDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -366,7 +373,7 @@
 - (void) testD850LibRaw {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D850 Raw Image 1"
                                                        withExtension:@"NEF"
-                                                         withLibrary:RDLibRaw];
+                                                         withDecoder:[RDLibRawDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -415,32 +422,22 @@
 }
 
 - (void) testD850RawSpeedValues {
-  [RawDecoderTests testD850RawImageValuesWithLibrary:RDRawSpeed];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils
+                             rawImageForResource:@"Nikon D850 Raw Image 1"
+                             withExtension:@"NEF"
+                             correctRawValues:false]; // The "uncorrected" RawSpeed values match the LibRaw values
+  [RawDecoderTests testD850RawImageValuesWithRawImage:rawImage];
 }
 
 - (void) testD850LibRawValues {
-  [RawDecoderTests testD850RawImageValuesWithLibrary:RDLibRaw];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils
+                             rawImageForResource:@"Nikon D850 Raw Image 1"
+                             withExtension:@"NEF"
+                             withDecoder:[RDLibRawDecoder self]];
+  [RawDecoderTests testD850RawImageValuesWithRawImage:rawImage];
 }
 
-+ (void) testD850RawImageValuesWithLibrary:(RDRawImageDecoderLibrary)library {
-  id<RDRawImage> rawImage;
-  NSString *rawImageName = @"Nikon D850 Raw Image 1";
-
-  switch (library) {
-    case RDLibRaw:
-      rawImage = [RawDecoderTestUtils
-                  rawImageForResource:rawImageName
-                  withExtension:@"NEF"
-                  withLibrary:library];
-      break;
-    case RDRawSpeed:
-      rawImage = [RawDecoderTestUtils
-                  rawImageForResource:rawImageName
-                  withExtension:@"NEF"
-                  correctRawValues:false]; // The "uncorrected" RawSpeed values match the LibRaw values
-      break;
-  }
-
++ (void) testD850RawImageValuesWithRawImage:(id<RDRawImage>)rawImage {
   assertImageValuesEqual(rawImage, 0, 0, 799);
   assertImageValuesEqual(rawImage, 0, 1, 1609);
   assertImageValuesEqual(rawImage, 0, 2, 790);
@@ -478,7 +475,8 @@
 
 - (void) testILCE1RawSpeed {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Sony ILCE-1 Raw Image 1"
-                                                       withExtension:@"ARW"];
+                                                       withExtension:@"ARW"
+                                                         withDecoder:[RDRawSpeedDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -530,7 +528,7 @@
 - (void) testILCE1LibRaw {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Sony ILCE-1 Raw Image 1"
                                                        withExtension:@"ARW"
-                                                         withLibrary:RDLibRaw];
+                                                         withDecoder:[RDLibRawDecoder self]];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -580,7 +578,8 @@
 
 - (void) testILCE1RawSpeedValues {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Sony ILCE-1 Raw Image 1"
-                                                       withExtension:@"ARW"];
+                                                       withExtension:@"ARW"
+                                                         withDecoder:[RDRawSpeedDecoder self]];
 
   assertImageValuesEqual(rawImage, 0, 0, 1123);
   assertImageValuesEqual(rawImage, 0, 1, 1887);
@@ -602,7 +601,7 @@
 - (void) testILCE1LibRawValues {
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Sony ILCE-1 Raw Image 1"
                                                        withExtension:@"ARW"
-                                                         withLibrary:RDLibRaw];
+                                                         withDecoder:[RDLibRawDecoder self]];
 
   assertImageValuesEqual(rawImage, 0, 0, 1124);
   assertImageValuesEqual(rawImage, 0, 1, 1888);
@@ -637,7 +636,7 @@
                                                       correctRawValues:correctRawValues];
   id<RDRawImage> libRawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                           withExtension:extension
-                                                            withLibrary:RDLibRaw];
+                                                            withDecoder:[RDLibRawDecoder self]];
 
   XCTAssertEqual(rdRawImage.bitsPerSample, libRawImage.bitsPerSample);
   XCTAssertEqual(rdRawImage.blackLevel, libRawImage.blackLevel);

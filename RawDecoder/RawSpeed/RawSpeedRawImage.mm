@@ -1,9 +1,7 @@
 #import "RawSpeedRawImage.h"
 
-#import <RawSpeed-API.h>
-
 #import "cameraMetaData.h"
-#import <RawDecoder/RDErrorDomain.h>
+#import "../RDErrorDomain.h"
 
 @interface RDCFA ()
 - (instancetype) initWithCFA:(rawspeed::ColorFilterArray)cfa;
@@ -46,75 +44,6 @@
   *error = [NSError errorWithDomain:RDErrorDomain
                                code:errCode
                            userInfo:errorDictionary];
-}
-
-+ (RawSpeedRawImage * _Nullable) fromData:(const NSData *)data
-                                    error:(NSError * _Nullable __autoreleasing *)error {
-  return [self fromData:data
-       correctRawValues:true
-                  error:error];
-}
-
-+ (RawSpeedRawImage * _Nullable) fromData:(const NSData *)data
-                         correctRawValues:(bool)correctRawValues
-                                    error:(NSError * _Nullable __autoreleasing *)error {
-  try {
-    auto buffer = new rawspeed::Buffer((const uint8_t *)data.bytes, (uint32_t) data.length);
-    RawSpeedRawImage *rawImage = [self fromBuffer:buffer
-                                 correctRawValues:correctRawValues
-                                            error:error];
-    return rawImage;
-  } catch (std::exception& ex) {
-    [self setErrorWithMessage:[NSString stringWithUTF8String: ex.what()] error:error];
-    return nil;
-  }
-}
-
-+ (RawSpeedRawImage * _Nullable) fromFileURL:(const NSURL *)fileURL
-                                       error:(NSError * _Nullable __autoreleasing *)error {
-  return [self fromFileURL:fileURL
-          correctRawValues:true
-                     error:error];
-}
-
-+ (RawSpeedRawImage * _Nullable) fromFileURL:(const NSURL *)fileURL
-                            correctRawValues:(bool)correctRawValues
-                                       error:(NSError * _Nullable __autoreleasing *)error {
-  try {
-    const char *filename = [[fileURL path] UTF8String];
-    rawspeed::FileReader fileReader(filename);
-    auto [storage, storageBuf] = fileReader.readFile();
-    RawSpeedRawImage *rawImage = [self fromBuffer:&storageBuf
-                                 correctRawValues:correctRawValues
-                                            error:error];
-    storage.reset();
-    return rawImage;
-  } catch (std::exception& ex) {
-    [self setErrorWithMessage:[NSString stringWithUTF8String: ex.what()] error:error];
-    return nil;
-  }
-}
-
-+ (RawSpeedRawImage * _Nullable) fromBuffer:(const rawspeed::Buffer *)buffer
-                            correctRawValues:(bool)correctRawValues
-                                       error:(NSError * _Nullable __autoreleasing *)error {
-  rawspeed::RawParser parser(*buffer);
-  const rawspeed::CameraMetaData *meta = cameraMetaData();
-  auto decoder = parser.getDecoder(meta);
-  decoder->failOnUnknown = true;
-  decoder->uncorrectedRawValues = !correctRawValues;
-  decoder->checkSupport(meta);
-  decoder->decodeRaw();
-  decoder->decodeMetaData(meta);
-  rawspeed::RawImage rawSpeedRawImage = decoder->mRaw;
-  const auto errors = rawSpeedRawImage->getErrors();
-  for(const auto &decodingError : errors) {
-    printf("Raw decoding error: %s\n", decodingError.c_str());
-  }
-  RawSpeedRawImage *rawImage = [[RawSpeedRawImage alloc] initWithRawImage:rawSpeedRawImage
-                                                                    error:error];
-  decoder.reset();
-  return rawImage;
 }
 
 - (instancetype _Nullable) initWithRawImage:(rawspeed::RawImage)rawImage

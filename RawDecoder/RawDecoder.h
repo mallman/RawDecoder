@@ -11,7 +11,8 @@ FOUNDATION_EXPORT const unsigned char RawDecoderVersionString[];
 #import <RawDecoder/RDCFA.h>
 #import <RawDecoder/RDCFAColor.h>
 #import <RawDecoder/RDErrorDomain.h>
+#import <RawDecoder/RDLibRawDecoder.h>
 #import <RawDecoder/RDRawImage.h>
 #import <RawDecoder/RDRawImageDecoder.h>
-#import <RawDecoder/RDRawImageDecoderLibrary.h>
 #import <RawDecoder/RDRawImageMetadata.h>
+#import <RawDecoder/RDRawSpeedDecoder.h>

@@ -21,11 +21,11 @@ USE_BUNDLED_LLVMOPENMP=ON
 ALLOW_DOWNLOADING_LLVMOPENMP=ON
 ```
 
-_Be warned_, building both `LibRaw` and `RawSpeed` with OpenMP support is discouraged unless the exact same version of OpenMP is linked with both libraries. If the versions of OpenMP are different, you may encounter crashes related to use of the OpenMP API. Personally, I build RawSpeed with OpenMP and LibRaw without OpenMP. I have not tried building both with the same version, and the build scripts provided in this repo will not check that condition.
+_Be warned_, building both `LibRaw` and `RawSpeed` with OpenMP support is discouraged unless the exact same version of OpenMP is linked with both libraries. If the versions of OpenMP are different, you may encounter crashes related to use of the OpenMP API.
 
 Once you have customized your build settings, you can build the platform support you desire with the `build_vendor_platform.sh` script. If you want to build an XCFramework supporting all deployment platforms, just run `build_all.sh`.
 
-Once the vendor libraries have been built, the RawDecoder framework can be built. You will need to update the signing configuration of `RawDecoder.xcodeproj` in Xcode. You may also need to modify the framework target library dependencies. For example, the target dependencies are configured to include the OpenMP runtime libraries from RawSpeed. If you do not build RawSpeed with OpenMP support, remove those dependencies from the platform build targets.
+Once the vendor libraries have been built, the RawDecoder framework can be built. You will need to update the signing configuration of `RawDecoder.xcodeproj` in Xcode. You may also need to modify the framework target library dependencies.
 
 Once the project settings have been updated appropriately, you can either build platform specific frameworks using the framework build targets. Or, run `create_xcframework.sh` to create a multi-platform XCFramework. The XCFramework can be used as a dependency of a multi-platform target, like a SwiftUI app.
 

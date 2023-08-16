@@ -3,6 +3,6 @@
 
 #import <Foundation/Foundation.h>
 
-const NSErrorDomain _Nonnull RDErrorDomain = @"RDErrorDomain";
+extern const NSErrorDomain _Nonnull RDErrorDomain;
 
 #endif /* RDErrorDomain_h */

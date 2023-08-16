@@ -7,13 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E0302D12A8D457F002D2B59 /* RDLibRawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4E0302D22A8D457F002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
+		4E0302D52A8D458F002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
+		4E0302D62A8D4591002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
+		4E0302D72A8D4595002D2B59 /* RDLibRawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4E0302D82A8D4596002D2B59 /* RDLibRawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4E0302D92A8D4AFC002D2B59 /* LibRawRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */; };
+		4E0302DA2A8D4AFC002D2B59 /* LibRawRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */; };
+		4E0302DB2A8D4AFD002D2B59 /* LibRawRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */; };
+		4E0302DD2A8D4E68002D2B59 /* RDErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302DC2A8D4E68002D2B59 /* RDErrorDomain.m */; };
+		4E0302DE2A8D4E68002D2B59 /* RDErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302DC2A8D4E68002D2B59 /* RDErrorDomain.m */; };
+		4E0302DF2A8D4E68002D2B59 /* RDErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302DC2A8D4E68002D2B59 /* RDErrorDomain.m */; };
+		4E0302E22A8D4FC7002D2B59 /* RDRawSpeedDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302E02A8D4FC7002D2B59 /* RDRawSpeedDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4E0302E32A8D4FC7002D2B59 /* RDRawSpeedDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302E02A8D4FC7002D2B59 /* RDRawSpeedDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4E0302E42A8D4FC7002D2B59 /* RDRawSpeedDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302E02A8D4FC7002D2B59 /* RDRawSpeedDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4E0302E52A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302E12A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm */; };
+		4E0302E62A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302E12A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm */; };
+		4E0302E72A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302E12A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm */; };
 		4E25B7142A89C23200E6E7DB /* libraw_r.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E25B7132A89C22900E6E7DB /* libraw_r.a */; };
 		4E25B7162A89C24900E6E7DB /* librawspeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E25B7152A89C24000E6E7DB /* librawspeed.a */; };
 		4E25B71B2A89C28300E6E7DB /* librawspeed_get_number_of_processor_cores.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E25B71A2A89C27800E6E7DB /* librawspeed_get_number_of_processor_cores.a */; };
 		4E25B71D2A89C2AE00E6E7DB /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E25B71C2A89C29E00E6E7DB /* libpugixml.a */; };
 		4E578A0F2A897D60002F7CE4 /* RawDecoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E578A062A897D5F002F7CE4 /* RawDecoder.framework */; };
 		4E578A152A897D60002F7CE4 /* RawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E578A092A897D5F002F7CE4 /* RawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4EE929702A89B0CB0048D918 /* RDRawImageDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE9295E2A89B0CB0048D918 /* RDRawImageDecoder.mm */; };
 		4EE929712A89B0CB0048D918 /* RDCFAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929722A89B0CB0048D918 /* RDCFA.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929602A89B0CB0048D918 /* RDCFA.mm */; };
 		4EE929732A89B0CB0048D918 /* RDErrorDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929612A89B0CB0048D918 /* RDErrorDomain.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -25,9 +42,7 @@
 		4EE929792A89B0CB0048D918 /* cameraMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929682A89B0CB0048D918 /* cameraMetaData.h */; };
 		4EE9297A2A89B0CB0048D918 /* RDRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929692A89B0CB0048D918 /* RDRawImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE9297B2A89B0CB0048D918 /* LibRawRawImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE9296B2A89B0CB0048D918 /* LibRawRawImage.m */; };
-		4EE9297C2A89B0CB0048D918 /* LibRawRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */; };
 		4EE9297D2A89B0CB0048D918 /* RDRawImageDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296D2A89B0CB0048D918 /* RDRawImageDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4EE9297E2A89B0CB0048D918 /* RDRawImageDecoderLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296E2A89B0CB0048D918 /* RDRawImageDecoderLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE9297F2A89B0CB0048D918 /* RDCFA.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296F2A89B0CB0048D918 /* RDCFA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929912A89B0ED0048D918 /* Sony ILCE-1 Raw Image 1.ARW in Resources */ = {isa = PBXBuildFile; fileRef = 4EE929812A89B0ED0048D918 /* Sony ILCE-1 Raw Image 1.ARW */; };
 		4EE929932A89B0ED0048D918 /* Nikon D800E Raw Image 1.NEF in Resources */ = {isa = PBXBuildFile; fileRef = 4EE929842A89B0ED0048D918 /* Nikon D800E Raw Image 1.NEF */; };
@@ -39,14 +54,11 @@
 		4EE929992A89B0ED0048D918 /* RawPixlsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE9298D2A89B0ED0048D918 /* RawPixlsTests.mm */; };
 		4EE9299C2A89B1CA0048D918 /* cameras.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4EE9299B2A89B1CA0048D918 /* cameras.xml */; };
 		4EE9299F2A89B3EB0048D918 /* librawspeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE9299E2A89B3DA0048D918 /* librawspeed.a */; };
-		4EE929A12A89B4280048D918 /* libomp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929A02A89B41C0048D918 /* libomp.a */; };
 		4EE929A32A89B44C0048D918 /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929A22A89B4410048D918 /* libpugixml.a */; };
 		4EE929A52A89B4690048D918 /* libraw_r.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929A42A89B4600048D918 /* libraw_r.a */; };
 		4EE929A72A89B4950048D918 /* librawspeed_get_number_of_processor_cores.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929A62A89B4860048D918 /* librawspeed_get_number_of_processor_cores.a */; };
 		4EE929A92A89B4A30048D918 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929A82A89B49D0048D918 /* libz.tbd */; };
-		4EE929B62A89BF040048D918 /* RDRawImageDecoderLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296E2A89B0CB0048D918 /* RDRawImageDecoderLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929B72A89BF040048D918 /* RDRawImageDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296D2A89B0CB0048D918 /* RDRawImageDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4EE929B82A89BF040048D918 /* RDRawImageDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE9295E2A89B0CB0048D918 /* RDRawImageDecoder.mm */; };
 		4EE929B92A89BF040048D918 /* RDRawImageMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929622A89B0CB0048D918 /* RDRawImageMetadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929BA2A89BF040048D918 /* RDErrorDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929612A89B0CB0048D918 /* RDErrorDomain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929BB2A89BF040048D918 /* RDRawImageMetadata.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929632A89B0CB0048D918 /* RDRawImageMetadata.mm */; };
@@ -55,7 +67,6 @@
 		4EE929BE2A89BF040048D918 /* RDCFA.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929602A89B0CB0048D918 /* RDCFA.mm */; };
 		4EE929BF2A89BF040048D918 /* RDCFAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929C02A89BF040048D918 /* RDCFA.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296F2A89B0CB0048D918 /* RDCFA.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4EE929C12A89BF130048D918 /* LibRawRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */; };
 		4EE929C22A89BF160048D918 /* LibRawRawImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE9296B2A89B0CB0048D918 /* LibRawRawImage.m */; };
 		4EE929C32A89BF190048D918 /* cameras.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4EE9299B2A89B1CA0048D918 /* cameras.xml */; };
 		4EE929C42A89BF1D0048D918 /* RawSpeedRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929652A89B0CB0048D918 /* RawSpeedRawImage.h */; };
@@ -66,9 +77,7 @@
 		4EE929CB2A89BFB60048D918 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929CA2A89BFB00048D918 /* libz.tbd */; };
 		4EE929CD2A89BFE70048D918 /* librawspeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929CC2A89BFDF0048D918 /* librawspeed.a */; };
 		4EE929CF2A89C0020048D918 /* librawspeed_get_number_of_processor_cores.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929CE2A89BFF80048D918 /* librawspeed_get_number_of_processor_cores.a */; };
-		4EE929D12A89C0360048D918 /* libomp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929D02A89C02A0048D918 /* libomp.a */; };
 		4EE929D32A89C0760048D918 /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929D22A89C06B0048D918 /* libpugixml.a */; };
-		4EE929D62A89C0830048D918 /* LibRawRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */; };
 		4EE929D72A89C0830048D918 /* RDCFAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929D82A89C0830048D918 /* cameraMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929682A89B0CB0048D918 /* cameraMetaData.h */; };
 		4EE929D92A89C0830048D918 /* RDRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929692A89B0CB0048D918 /* RDRawImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -78,12 +87,10 @@
 		4EE929DD2A89C0830048D918 /* RawSpeedRawImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929652A89B0CB0048D918 /* RawSpeedRawImage.h */; };
 		4EE929DE2A89C0830048D918 /* RDCFA.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296F2A89B0CB0048D918 /* RDCFA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929DF2A89C0830048D918 /* RawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E578A092A897D5F002F7CE4 /* RawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4EE929E02A89C0830048D918 /* RDRawImageDecoderLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9296E2A89B0CB0048D918 /* RDRawImageDecoderLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929E22A89C0830048D918 /* cameraMetaData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929662A89B0CB0048D918 /* cameraMetaData.mm */; };
 		4EE929E32A89C0830048D918 /* RDCFA.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929602A89B0CB0048D918 /* RDCFA.mm */; };
 		4EE929E42A89C0830048D918 /* LibRawRawImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE9296B2A89B0CB0048D918 /* LibRawRawImage.m */; };
 		4EE929E52A89C0830048D918 /* RawSpeedRawImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929672A89B0CB0048D918 /* RawSpeedRawImage.mm */; };
-		4EE929E62A89C0830048D918 /* RDRawImageDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE9295E2A89B0CB0048D918 /* RDRawImageDecoder.mm */; };
 		4EE929E72A89C0830048D918 /* RDRawImageMetadata.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929632A89B0CB0048D918 /* RDRawImageMetadata.mm */; };
 		4EE929EE2A89C0830048D918 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EE929CA2A89BFB00048D918 /* libz.tbd */; };
 		4EE929F02A89C0830048D918 /* cameras.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4EE9299B2A89B1CA0048D918 /* cameras.xml */; };
@@ -100,6 +107,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDLibRawDecoder.h; sourceTree = "<group>"; };
+		4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RDLibRawDecoder.m; sourceTree = "<group>"; };
+		4E0302DC2A8D4E68002D2B59 /* RDErrorDomain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RDErrorDomain.m; sourceTree = "<group>"; };
+		4E0302E02A8D4FC7002D2B59 /* RDRawSpeedDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDRawSpeedDecoder.h; sourceTree = "<group>"; };
+		4E0302E12A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RDRawSpeedDecoder.mm; sourceTree = "<group>"; };
 		4E25B7132A89C22900E6E7DB /* libraw_r.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libraw_r.a; path = "vendor/LibRaw/build-iOS_Simulator/libraw_r.a"; sourceTree = "<group>"; };
 		4E25B7152A89C24000E6E7DB /* librawspeed.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librawspeed.a; path = "vendor/RawSpeed/build-iOS_Simulator/librawspeed.a"; sourceTree = "<group>"; };
 		4E25B71A2A89C27800E6E7DB /* librawspeed_get_number_of_processor_cores.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librawspeed_get_number_of_processor_cores.a; path = "vendor/RawSpeed/build-iOS_Simulator/src/librawspeed/common/librawspeed_get_number_of_processor_cores.a"; sourceTree = "<group>"; };
@@ -108,7 +120,6 @@
 		4E578A092A897D5F002F7CE4 /* RawDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RawDecoder.h; sourceTree = "<group>"; };
 		4E578A0E2A897D60002F7CE4 /* RawDecoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RawDecoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EACA35B2A8C0AE4004B74B2 /* raw-pixls-us-data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "raw-pixls-us-data"; sourceTree = "<group>"; };
-		4EE9295E2A89B0CB0048D918 /* RDRawImageDecoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RDRawImageDecoder.mm; sourceTree = "<group>"; };
 		4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDCFAColor.h; sourceTree = "<group>"; };
 		4EE929602A89B0CB0048D918 /* RDCFA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RDCFA.mm; sourceTree = "<group>"; };
 		4EE929612A89B0CB0048D918 /* RDErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDErrorDomain.h; sourceTree = "<group>"; };
@@ -122,7 +133,6 @@
 		4EE9296B2A89B0CB0048D918 /* LibRawRawImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibRawRawImage.m; sourceTree = "<group>"; };
 		4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibRawRawImage.h; sourceTree = "<group>"; };
 		4EE9296D2A89B0CB0048D918 /* RDRawImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDRawImageDecoder.h; sourceTree = "<group>"; };
-		4EE9296E2A89B0CB0048D918 /* RDRawImageDecoderLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDRawImageDecoderLibrary.h; sourceTree = "<group>"; };
 		4EE9296F2A89B0CB0048D918 /* RDCFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDCFA.h; sourceTree = "<group>"; };
 		4EE929812A89B0ED0048D918 /* Sony ILCE-1 Raw Image 1.ARW */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sony ILCE-1 Raw Image 1.ARW"; sourceTree = "<group>"; };
 		4EE929842A89B0ED0048D918 /* Nikon D800E Raw Image 1.NEF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nikon D800E Raw Image 1.NEF"; sourceTree = "<group>"; };
@@ -155,7 +165,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EE929A12A89B4280048D918 /* libomp.a in Frameworks */,
 				4EE929A92A89B4A30048D918 /* libz.tbd in Frameworks */,
 				4EE929A32A89B44C0048D918 /* libpugixml.a in Frameworks */,
 				4EE9299F2A89B3EB0048D918 /* librawspeed.a in Frameworks */,
@@ -177,7 +186,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EE929C92A89BFA60048D918 /* libraw_r.a in Frameworks */,
-				4EE929D12A89C0360048D918 /* libomp.a in Frameworks */,
 				4EE929CF2A89C0020048D918 /* librawspeed_get_number_of_processor_cores.a in Frameworks */,
 				4EE929CD2A89BFE70048D918 /* librawspeed.a in Frameworks */,
 				4EE929D32A89C0760048D918 /* libpugixml.a in Frameworks */,
@@ -231,10 +239,9 @@
 				4EE929612A89B0CB0048D918 /* RDErrorDomain.h */,
 				4EE929692A89B0CB0048D918 /* RDRawImage.h */,
 				4EE9296D2A89B0CB0048D918 /* RDRawImageDecoder.h */,
-				4EE9296E2A89B0CB0048D918 /* RDRawImageDecoderLibrary.h */,
 				4EE929622A89B0CB0048D918 /* RDRawImageMetadata.h */,
+				4E0302DC2A8D4E68002D2B59 /* RDErrorDomain.m */,
 				4EE929602A89B0CB0048D918 /* RDCFA.mm */,
-				4EE9295E2A89B0CB0048D918 /* RDRawImageDecoder.mm */,
 				4EE929632A89B0CB0048D918 /* RDRawImageMetadata.mm */,
 				4EE9296A2A89B0CB0048D918 /* LibRaw */,
 				4EE929642A89B0CB0048D918 /* RawSpeed */,
@@ -261,11 +268,13 @@
 		4EE929642A89B0CB0048D918 /* RawSpeed */ = {
 			isa = PBXGroup;
 			children = (
-				4EE9299B2A89B1CA0048D918 /* cameras.xml */,
 				4EE929682A89B0CB0048D918 /* cameraMetaData.h */,
 				4EE929652A89B0CB0048D918 /* RawSpeedRawImage.h */,
+				4E0302E02A8D4FC7002D2B59 /* RDRawSpeedDecoder.h */,
 				4EE929662A89B0CB0048D918 /* cameraMetaData.mm */,
 				4EE929672A89B0CB0048D918 /* RawSpeedRawImage.mm */,
+				4E0302E12A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm */,
+				4EE9299B2A89B1CA0048D918 /* cameras.xml */,
 			);
 			path = RawSpeed;
 			sourceTree = "<group>";
@@ -274,7 +283,9 @@
 			isa = PBXGroup;
 			children = (
 				4EE9296C2A89B0CB0048D918 /* LibRawRawImage.h */,
+				4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */,
 				4EE9296B2A89B0CB0048D918 /* LibRawRawImage.m */,
+				4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */,
 			);
 			path = LibRaw;
 			sourceTree = "<group>";
@@ -351,14 +362,15 @@
 			files = (
 				4E578A152A897D60002F7CE4 /* RawDecoder.h in Headers */,
 				4EE9297D2A89B0CB0048D918 /* RDRawImageDecoder.h in Headers */,
+				4E0302E22A8D4FC7002D2B59 /* RDRawSpeedDecoder.h in Headers */,
 				4EE929762A89B0CB0048D918 /* RawSpeedRawImage.h in Headers */,
 				4EE929712A89B0CB0048D918 /* RDCFAColor.h in Headers */,
 				4EE9297F2A89B0CB0048D918 /* RDCFA.h in Headers */,
 				4EE929742A89B0CB0048D918 /* RDRawImageMetadata.h in Headers */,
-				4EE9297C2A89B0CB0048D918 /* LibRawRawImage.h in Headers */,
+				4E0302D92A8D4AFC002D2B59 /* LibRawRawImage.h in Headers */,
 				4EE929792A89B0CB0048D918 /* cameraMetaData.h in Headers */,
+				4E0302D12A8D457F002D2B59 /* RDLibRawDecoder.h in Headers */,
 				4EE929732A89B0CB0048D918 /* RDErrorDomain.h in Headers */,
-				4EE9297E2A89B0CB0048D918 /* RDRawImageDecoderLibrary.h in Headers */,
 				4EE9297A2A89B0CB0048D918 /* RDRawImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,17 +379,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EE929C12A89BF130048D918 /* LibRawRawImage.h in Headers */,
 				4EE929BF2A89BF040048D918 /* RDCFAColor.h in Headers */,
 				4EE929C52A89BF1D0048D918 /* cameraMetaData.h in Headers */,
+				4E0302E32A8D4FC7002D2B59 /* RDRawSpeedDecoder.h in Headers */,
 				4EE929BC2A89BF040048D918 /* RDRawImage.h in Headers */,
 				4EE929B92A89BF040048D918 /* RDRawImageMetadata.h in Headers */,
 				4EE929BA2A89BF040048D918 /* RDErrorDomain.h in Headers */,
 				4EE929B72A89BF040048D918 /* RDRawImageDecoder.h in Headers */,
+				4E0302DA2A8D4AFC002D2B59 /* LibRawRawImage.h in Headers */,
 				4EE929C42A89BF1D0048D918 /* RawSpeedRawImage.h in Headers */,
+				4E0302D72A8D4595002D2B59 /* RDLibRawDecoder.h in Headers */,
 				4EE929C02A89BF040048D918 /* RDCFA.h in Headers */,
 				4EE929BD2A89BF040048D918 /* RawDecoder.h in Headers */,
-				4EE929B62A89BF040048D918 /* RDRawImageDecoderLibrary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,17 +398,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EE929D62A89C0830048D918 /* LibRawRawImage.h in Headers */,
 				4EE929D72A89C0830048D918 /* RDCFAColor.h in Headers */,
 				4EE929D82A89C0830048D918 /* cameraMetaData.h in Headers */,
+				4E0302E42A8D4FC7002D2B59 /* RDRawSpeedDecoder.h in Headers */,
 				4EE929D92A89C0830048D918 /* RDRawImage.h in Headers */,
 				4EE929DA2A89C0830048D918 /* RDRawImageMetadata.h in Headers */,
 				4EE929DB2A89C0830048D918 /* RDErrorDomain.h in Headers */,
 				4EE929DC2A89C0830048D918 /* RDRawImageDecoder.h in Headers */,
+				4E0302DB2A8D4AFD002D2B59 /* LibRawRawImage.h in Headers */,
 				4EE929DD2A89C0830048D918 /* RawSpeedRawImage.h in Headers */,
+				4E0302D82A8D4596002D2B59 /* RDLibRawDecoder.h in Headers */,
 				4EE929DE2A89C0830048D918 /* RDCFA.h in Headers */,
 				4EE929DF2A89C0830048D918 /* RawDecoder.h in Headers */,
-				4EE929E02A89C0830048D918 /* RDRawImageDecoderLibrary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,8 +576,10 @@
 			files = (
 				4EE929752A89B0CB0048D918 /* RDRawImageMetadata.mm in Sources */,
 				4EE9297B2A89B0CB0048D918 /* LibRawRawImage.m in Sources */,
+				4E0302DD2A8D4E68002D2B59 /* RDErrorDomain.m in Sources */,
 				4EE929722A89B0CB0048D918 /* RDCFA.mm in Sources */,
-				4EE929702A89B0CB0048D918 /* RDRawImageDecoder.mm in Sources */,
+				4E0302D22A8D457F002D2B59 /* RDLibRawDecoder.m in Sources */,
+				4E0302E52A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */,
 				4EE929772A89B0CB0048D918 /* cameraMetaData.mm in Sources */,
 				4EE929782A89B0CB0048D918 /* RawSpeedRawImage.mm in Sources */,
 			);
@@ -585,9 +601,11 @@
 			files = (
 				4EE929C62A89BF1D0048D918 /* cameraMetaData.mm in Sources */,
 				4EE929BE2A89BF040048D918 /* RDCFA.mm in Sources */,
+				4E0302DE2A8D4E68002D2B59 /* RDErrorDomain.m in Sources */,
 				4EE929C22A89BF160048D918 /* LibRawRawImage.m in Sources */,
 				4EE929C72A89BF1D0048D918 /* RawSpeedRawImage.mm in Sources */,
-				4EE929B82A89BF040048D918 /* RDRawImageDecoder.mm in Sources */,
+				4E0302D52A8D458F002D2B59 /* RDLibRawDecoder.m in Sources */,
+				4E0302E62A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */,
 				4EE929BB2A89BF040048D918 /* RDRawImageMetadata.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,9 +616,11 @@
 			files = (
 				4EE929E22A89C0830048D918 /* cameraMetaData.mm in Sources */,
 				4EE929E32A89C0830048D918 /* RDCFA.mm in Sources */,
+				4E0302DF2A8D4E68002D2B59 /* RDErrorDomain.m in Sources */,
 				4EE929E42A89C0830048D918 /* LibRawRawImage.m in Sources */,
 				4EE929E52A89C0830048D918 /* RawSpeedRawImage.mm in Sources */,
-				4EE929E62A89C0830048D918 /* RDRawImageDecoder.mm in Sources */,
+				4E0302D62A8D4591002D2B59 /* RDLibRawDecoder.m in Sources */,
+				4E0302E72A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */,
 				4EE929E72A89C0830048D918 /* RDRawImageMetadata.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

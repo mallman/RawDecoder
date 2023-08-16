@@ -7,26 +7,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *) rawPixlsDataPath;
 
-+ (id<RDRawImage>) rawImageAtPixlsFilePath:(NSString *)pixlsFilePath;
-
 + (id<RDRawImage>) rawImageAtPixlsFilePath:(NSString *)pixlsFilePath
-                               withLibrary:(RDRawImageDecoderLibrary)library;
-
-+ (id<RDRawImage>) rawImageForResource:(NSString *)resource
-                         withExtension:(NSString *)extension;
+                               withDecoder:(id<RDRawImageDecoder>)decoder;
 
 + (id<RDRawImage>) rawImageForResource:(NSString *)resource
                          withExtension:(NSString *)extension
-                           withLibrary:(RDRawImageDecoderLibrary)library;
+                           withDecoder:(id<RDRawImageDecoder>)decoder;
 
 + (id<RDRawImage>) rawImageForResource:(NSString *)resource
                          withExtension:(NSString *)extension
                       correctRawValues:(bool)correctRawValues;
 
-+ (id<RDRawImage>) rawImageAtURL:(NSURL *)rawFileUrl;
-
 + (id<RDRawImage>) rawImageAtURL:(NSURL *)rawFileUrl
-                     withLibrary:(RDRawImageDecoderLibrary)library;
+                     withDecoder:(id<RDRawImageDecoder>)decoder;
 
 + (id<RDRawImage>) rawImageAtURL:(NSURL *)rawFileUrl
                 correctRawValues:(bool)correctRawValues;
