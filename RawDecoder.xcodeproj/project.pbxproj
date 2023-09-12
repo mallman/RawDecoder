@@ -119,6 +119,7 @@
 		4E578A062A897D5F002F7CE4 /* RawDecoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RawDecoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E578A092A897D5F002F7CE4 /* RawDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RawDecoder.h; sourceTree = "<group>"; };
 		4E578A0E2A897D60002F7CE4 /* RawDecoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RawDecoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E7CDBCF2AB0B71D00C8119E /* RawDecoder.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RawDecoder.xctestplan; sourceTree = "<group>"; };
 		4EACA35B2A8C0AE4004B74B2 /* raw-pixls-us-data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "raw-pixls-us-data"; sourceTree = "<group>"; };
 		4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDCFAColor.h; sourceTree = "<group>"; };
 		4EE929602A89B0CB0048D918 /* RDCFA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RDCFA.mm; sourceTree = "<group>"; };
@@ -145,7 +146,6 @@
 		4EE929902A89B0ED0048D918 /* RawDecoderTestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawDecoderTestUtils.h; sourceTree = "<group>"; };
 		4EE9299B2A89B1CA0048D918 /* cameras.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = cameras.xml; path = vendor/RawSpeed/RawSpeed/data/cameras.xml; sourceTree = SOURCE_ROOT; };
 		4EE9299E2A89B3DA0048D918 /* librawspeed.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librawspeed.a; path = "vendor/RawSpeed/build-macOS/librawspeed.a"; sourceTree = "<group>"; };
-		4EE929A02A89B41C0048D918 /* libomp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libomp.a; path = "vendor/RawSpeed/build-macOS/src/external/llvm-openmp/build/runtime/src/libomp.a"; sourceTree = "<group>"; };
 		4EE929A22A89B4410048D918 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = "vendor/RawSpeed/build-macOS/src/external/pugixml/build/libpugixml.a"; sourceTree = "<group>"; };
 		4EE929A42A89B4600048D918 /* libraw_r.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libraw_r.a; path = "vendor/LibRaw/build-macOS/libraw_r.a"; sourceTree = "<group>"; };
 		4EE929A62A89B4860048D918 /* librawspeed_get_number_of_processor_cores.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librawspeed_get_number_of_processor_cores.a; path = "vendor/RawSpeed/build-macOS/src/librawspeed/common/librawspeed_get_number_of_processor_cores.a"; sourceTree = "<group>"; };
@@ -155,7 +155,6 @@
 		4EE929CA2A89BFB00048D918 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		4EE929CC2A89BFDF0048D918 /* librawspeed.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librawspeed.a; path = "vendor/RawSpeed/build-iOS/librawspeed.a"; sourceTree = "<group>"; };
 		4EE929CE2A89BFF80048D918 /* librawspeed_get_number_of_processor_cores.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librawspeed_get_number_of_processor_cores.a; path = "vendor/RawSpeed/build-iOS/src/librawspeed/common/librawspeed_get_number_of_processor_cores.a"; sourceTree = "<group>"; };
-		4EE929D02A89C02A0048D918 /* libomp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libomp.a; path = "vendor/RawSpeed/build-iOS/src/external/llvm-openmp/build/runtime/src/libomp.a"; sourceTree = "<group>"; };
 		4EE929D22A89C06B0048D918 /* libpugixml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpugixml.a; path = "vendor/RawSpeed/build-iOS/src/external/pugixml/build/libpugixml.a"; sourceTree = "<group>"; };
 		4EE929F42A89C0830048D918 /* RawDecoder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RawDecoder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -211,11 +210,12 @@
 		4E5789FC2A897D5F002F7CE4 = {
 			isa = PBXGroup;
 			children = (
+				4E7CDBCF2AB0B71D00C8119E /* RawDecoder.xctestplan */,
 				4E578A082A897D5F002F7CE4 /* RawDecoder */,
 				4E578A122A897D60002F7CE4 /* RawDecoderTests */,
 				4EACA35B2A8C0AE4004B74B2 /* raw-pixls-us-data */,
-				4E578A072A897D5F002F7CE4 /* Products */,
 				4EE9299D2A89B3DA0048D918 /* Frameworks */,
+				4E578A072A897D5F002F7CE4 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -338,7 +338,6 @@
 				4E25B7152A89C24000E6E7DB /* librawspeed.a */,
 				4E25B7132A89C22900E6E7DB /* libraw_r.a */,
 				4EE929D22A89C06B0048D918 /* libpugixml.a */,
-				4EE929D02A89C02A0048D918 /* libomp.a */,
 				4EE929CE2A89BFF80048D918 /* librawspeed_get_number_of_processor_cores.a */,
 				4EE929CC2A89BFDF0048D918 /* librawspeed.a */,
 				4EE929CA2A89BFB00048D918 /* libz.tbd */,
@@ -347,7 +346,6 @@
 				4EE929A62A89B4860048D918 /* librawspeed_get_number_of_processor_cores.a */,
 				4EE929A42A89B4600048D918 /* libraw_r.a */,
 				4EE929A22A89B4410048D918 /* libpugixml.a */,
-				4EE929A02A89B41C0048D918 /* libomp.a */,
 				4EE9299E2A89B3DA0048D918 /* librawspeed.a */,
 			);
 			name = Frameworks;
