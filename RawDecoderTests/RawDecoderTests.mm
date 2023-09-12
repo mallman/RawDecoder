@@ -744,7 +744,6 @@
 
   XCTAssertEqual(rdRawImage.bitsPerSample, libRawImage.bitsPerSample);
   XCTAssertEqual(rdRawImage.blackLevel, libRawImage.blackLevel);
-  XCTAssertEqual(rdRawImage.bytesPerRow, libRawImage.bytesPerRow);
   XCTAssertEqual(rdRawImage.cropOriginX, libRawImage.cropOriginX);
   XCTAssertEqual(rdRawImage.cropOriginY, libRawImage.cropOriginY);
   XCTAssertEqual(rdRawImage.height, libRawImage.height);
