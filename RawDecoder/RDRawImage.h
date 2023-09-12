@@ -42,8 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Note this offset is from the top of the image
 @property (readonly) NSInteger cropOriginY;
 
-/// The cropped sensor image data, relative to the crop origin. Note, the black level has not been
-/// subtracted from these values
+/// The cropped sensor image data, relative to the crop origin. The value at (row, col) is
+/// `imageData[col + row * bytesPerRow / 2]`.
+///
+/// Note, the black level has not been subtracted from these values
 @property (readonly) const uint16_t *imageData;
 
 /// The height of the cropped sensor image
@@ -53,8 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSInteger width;
 @property (readonly) RDRawImageMetadata *metadata;
 
-/// The uncropped sensor image data, relative to the top left corner of the image. Note, the
-/// black level has not been subtracted from these values
+/// The uncropped sensor image data, relative to the top left corner of the image. The value at
+/// (row, col) is `uncroppedImageData[col + row * bytesPerRow / 2]`.
+///
+/// Note, the black level has not been subtracted from these values
 @property (readonly) const uint16_t *uncroppedImageData;
 
 /// The height of the uncropped sensor image

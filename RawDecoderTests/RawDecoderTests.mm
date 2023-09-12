@@ -59,6 +59,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D200");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D200");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D200");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD200LibRaw {
@@ -110,6 +113,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D200");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D200");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D200");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD800ERawSpeed {
@@ -162,6 +168,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D800E");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D800E");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D800E");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD800ELibRaw {
@@ -213,6 +222,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D800E");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D800E");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D800E");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD810RawSpeed {
@@ -265,6 +277,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D810");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D810");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D810");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD810LibRaw {
@@ -316,6 +331,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D810");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D810");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D810");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD850RawSpeed {
@@ -368,6 +386,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D850");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D850");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D850");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD850LibRaw {
@@ -419,6 +440,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D850");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D850");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"D850");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testD850RawSpeedValues {
@@ -467,10 +491,10 @@
 }
 
 - (void) testD850RawSpeedVersusLibRaw {
-  [self checkRawSpeedVersusLibRawForResource:@"Nikon D850 Raw Image 1"
-                               withExtension:@"NEF"
-                            correctRawValues:false
-                                   tolerance:0];
+  [RawDecoderTests checkRawSpeedVersusLibRawForResource:@"Nikon D850 Raw Image 1"
+                                          withExtension:@"NEF"
+                                       correctRawValues:false
+                                              tolerance:0];
 }
 
 - (void) testILCE1RawSpeed {
@@ -523,6 +547,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"ILCE-1");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Sony ILCE-1");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"ILCE-1");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testILCE1LibRaw {
@@ -574,6 +601,9 @@
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"ILCE-1");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Sony ILCE-1");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"ILCE-1");
+
+  [RawDecoderTests checkCroppedImageDataValues:rawImage];
+  [RawDecoderTests checkUncroppedImageDataValues:rawImage];
 }
 
 - (void) testILCE1RawSpeedValues {
@@ -621,13 +651,13 @@
 }
 
 - (void) testILCE1RawSpeedVersusLibRaw {
-  [self checkRawSpeedVersusLibRawForResource:@"Sony ILCE-1 Raw Image 1"
-                               withExtension:@"ARW"
-                            correctRawValues:true
-                                   tolerance:2];
+  [RawDecoderTests checkRawSpeedVersusLibRawForResource:@"Sony ILCE-1 Raw Image 1"
+                                          withExtension:@"ARW"
+                                       correctRawValues:true
+                                              tolerance:2];
 }
 
-- (void) checkRawSpeedVersusLibRawForResource:(NSString *)resource
++ (void) checkRawSpeedVersusLibRawForResource:(NSString *)resource
                                 withExtension:(NSString *)extension
                              correctRawValues:(bool)correctRawValues
                                     tolerance:(int)tolerance {
@@ -674,6 +704,22 @@
   assertImageValuesEqual(rdRawImage, libRawImage, rdRawImage.height - 2, rdRawImage.width - 1, tolerance);
   assertImageValuesEqual(rdRawImage, libRawImage, rdRawImage.height - 1, rdRawImage.width - 2, tolerance);
   assertImageValuesEqual(rdRawImage, libRawImage, rdRawImage.height - 2, rdRawImage.width - 2, tolerance);
+}
+
++ (void) checkCroppedImageDataValues:(id<RDRawImage>)rawImage {
+  dispatch_apply(rawImage.height, DISPATCH_APPLY_AUTO, ^(size_t row) {
+    for (int col = 0; col < rawImage.width; col++) {
+      XCTAssertEqual(rawImage.imageData[col + row * rawImage.bytesPerRow / 2], [rawImage valueAtRow:row col:col]);
+    }
+  });
+}
+
++ (void) checkUncroppedImageDataValues:(id<RDRawImage>)rawImage {
+  dispatch_apply(rawImage.uncroppedHeight, DISPATCH_APPLY_AUTO, ^(size_t row) {
+    for (int col = 0; col < rawImage.uncroppedWidth; col++) {
+      XCTAssertEqual(rawImage.uncroppedImageData[col + row * rawImage.bytesPerRow / 2], [rawImage valueAtUncroppedRow:row col:col]);
+    }
+  });
 }
 
 void assertImageValuesEqual(id<RDRawImage> rawImage, id<RDRawImage> libRawImage, long uncroppedRow, long uncroppedCol, int tolerance);
