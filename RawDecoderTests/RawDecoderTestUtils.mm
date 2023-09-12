@@ -16,6 +16,12 @@
 
 @implementation RawDecoderTestUtils
 
++ (NSURL *) urlForResource:(NSString *)resource
+             withExtension:(NSString *)extension {
+  NSBundle *testBundle = [NSBundle bundleForClass:[self class]];
+  return [testBundle URLForResource:resource withExtension:extension];
+}
+
 + (NSString *) rawPixlsDataPath {
   NSString *envVar = @"RAW_PIXLS_DATA_DIR";
   NSString *rawPixlsDataDirectory = [[[NSProcessInfo processInfo] environment] objectForKey:envVar];
@@ -35,8 +41,8 @@
 + (id<RDRawImage>) rawImageForResource:(NSString *)resource
                          withExtension:(NSString *)extension
                            withDecoder:(id<RDRawImageDecoder>)decoder {
-  NSBundle *testBundle = [NSBundle bundleForClass:[self class]];
-  NSURL *rawFileUrl = [testBundle URLForResource:resource withExtension:extension];
+  NSURL *rawFileUrl = [RawDecoderTestUtils urlForResource:resource
+                                            withExtension:extension];
   return [RawDecoderTestUtils rawImageAtURL:rawFileUrl
                                 withDecoder:decoder];
 }
@@ -44,8 +50,8 @@
 + (id<RDRawImage>) rawImageForResource:(NSString *)resource
                          withExtension:(NSString *)extension
                       correctRawValues:(bool)correctRawValues {
-  NSBundle *testBundle = [NSBundle bundleForClass:[self class]];
-  NSURL *rawFileUrl = [testBundle URLForResource:resource withExtension:extension];
+  NSURL *rawFileUrl = [RawDecoderTestUtils urlForResource:resource
+                                            withExtension:extension];
   return [RawDecoderTestUtils rawImageAtURL:rawFileUrl
                            correctRawValues:correctRawValues];
 }
@@ -54,17 +60,8 @@
                      withDecoder:(id<RDRawImageDecoder>)decoder {
   XCTAssertNotNil(rawFileUrl, @"Couldn't find file at %@", [rawFileUrl path]);
   NSError *error;
-
-  NSData *rawData = [NSData dataWithContentsOfURL:rawFileUrl];
-  id<RDRawImage>rawImageFromData = [decoder decodeRawImageFromData:rawData
-                                                             error:&error];
-  XCTAssertNotNil(rawImageFromData, @"Failed to load raw image from data at %@: %@", [rawFileUrl path], error);
-
   id<RDRawImage>rawImage = [decoder decodeRawImageFromFileURL:rawFileUrl
                                                         error:&error];
-  //  if (rawImage == nil) {
-  //    printf("@\"%s\",\n", [[[rawFileUrl path] substringFromIndex:45] UTF8String]);
-  //  }
   XCTAssertNotNil(rawImage, @"Failed to load raw image at %@: %@", [rawFileUrl path], error);
   return rawImage;
 }
@@ -73,19 +70,9 @@
                 correctRawValues:(bool)correctRawValues {
   XCTAssertNotNil(rawFileUrl, @"Couldn't find file at %@", [rawFileUrl path]);
   NSError *error;
-
-  NSData *rawData = [NSData dataWithContentsOfURL:rawFileUrl];
-  id<RDRawImage>rawImageFromData = [RDRawSpeedDecoder decodeRawImageFromData:rawData
-                                                            correctRawValues:correctRawValues
-                                                                       error:&error];
-  XCTAssertNotNil(rawImageFromData, @"Failed to load raw image from data at %@: %@", [rawFileUrl path], error);
-
   id<RDRawImage>rawImage = [RDRawSpeedDecoder decodeRawImageFromFileURL:rawFileUrl
                                                        correctRawValues:correctRawValues
                                                                   error:&error];
-  //  if (rawImage == nil) {
-  //    printf("@\"%s\",\n", [[[rawFileUrl path] substringFromIndex:45] UTF8String]);
-  //  }
   XCTAssertNotNil(rawImage, @"Failed to load raw image at %@: %@", [rawFileUrl path], error);
   return rawImage;
 }

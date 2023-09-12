@@ -10,9 +10,15 @@
 @implementation RawDecoderTests
 
 - (void) testD200RawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D200 Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDRawSpeedDecoder self]];
+  NSString *resource = @"Nikon D200 Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 12);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -65,9 +71,15 @@
 }
 
 - (void) testD200LibRaw {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D200 Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDLibRawDecoder self]];
+  NSString *resource = @"Nikon D200 Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 12);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -119,9 +131,15 @@
 }
 
 - (void) testD800ERawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D800E Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDRawSpeedDecoder self]];
+  NSString *resource = @"Nikon D800E Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -174,9 +192,15 @@
 }
 
 - (void) testD800ELibRaw {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D800E Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDLibRawDecoder self]];
+  NSString *resource = @"Nikon D800E Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -228,9 +252,15 @@
 }
 
 - (void) testD810RawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D810 Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDRawSpeedDecoder self]];
+  NSString *resource = @"Nikon D810 Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -283,9 +313,15 @@
 }
 
 - (void) testD810LibRaw {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D810 Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDLibRawDecoder self]];
+  NSString *resource = @"Nikon D810 Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -337,9 +373,15 @@
 }
 
 - (void) testD850RawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D850 Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDRawSpeedDecoder self]];
+  NSString *resource = @"Nikon D850 Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -392,9 +434,15 @@
 }
 
 - (void) testD850LibRaw {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Nikon D850 Raw Image 1"
-                                                       withExtension:@"NEF"
-                                                         withDecoder:[RDLibRawDecoder self]];
+  NSString *resource = @"Nikon D850 Raw Image 1";
+  NSString *extension = @"NEF";
+  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -498,9 +546,15 @@
 }
 
 - (void) testILCE1RawSpeed {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Sony ILCE-1 Raw Image 1"
-                                                       withExtension:@"ARW"
-                                                         withDecoder:[RDRawSpeedDecoder self]];
+  NSString *resource = @"Sony ILCE-1 Raw Image 1";
+  NSString *extension = @"ARW";
+  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -553,9 +607,15 @@
 }
 
 - (void) testILCE1LibRaw {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:@"Sony ILCE-1 Raw Image 1"
-                                                       withExtension:@"ARW"
-                                                         withDecoder:[RDLibRawDecoder self]];
+  NSString *resource = @"Sony ILCE-1 Raw Image 1";
+  NSString *extension = @"ARW";
+  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
+                                                       withExtension:extension
+                                                         withDecoder:decoder];
+  [RawDecoderTests checkDecodeDataVersusURLForResource:resource
+                                         withExtension:extension
+                                               decoder:decoder];
 
   XCTAssertEqual(rawImage.bitsPerSample, 14);
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
@@ -655,6 +715,20 @@
                                           withExtension:@"ARW"
                                        correctRawValues:true
                                               tolerance:2];
+}
+
++ (void) checkDecodeDataVersusURLForResource:(NSString *)resource
+                               withExtension:(NSString *)extension
+                                     decoder:(id<RDRawImageDecoder>)decoder {
+  NSError *error;
+  NSURL *fileUrl = [RawDecoderTestUtils urlForResource:resource
+                                         withExtension:extension];
+  NSData *rawData = [NSData dataWithContentsOfURL:fileUrl];
+  id<RDRawImage>rawImageFromData = [decoder decodeRawImageFromData:rawData
+                                                             error:&error];
+  id<RDRawImage>rawImageFromURL = [decoder decodeRawImageFromFileURL:fileUrl
+                                                               error:&error];
+  XCTAssert(memcmp(rawImageFromData.uncroppedImageData, rawImageFromURL.uncroppedImageData, rawImageFromURL.uncroppedHeight * rawImageFromURL.bytesPerRow) == 0);
 }
 
 + (void) checkRawSpeedVersusLibRawForResource:(NSString *)resource

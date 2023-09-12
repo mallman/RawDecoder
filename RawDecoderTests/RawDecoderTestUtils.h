@@ -5,6 +5,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RawDecoderTestUtils: NSObject
 
++ (NSURL *) urlForResource:(NSString *)resource
+             withExtension:(NSString *)extension;
+
 + (NSString *) rawPixlsDataPath;
 
 + (id<RDRawImage>) rawImageAtPixlsFilePath:(NSString *)pixlsFilePath
