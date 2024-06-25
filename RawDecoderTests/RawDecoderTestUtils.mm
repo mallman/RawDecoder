@@ -4,16 +4,6 @@
 
 #import "RawDecoderTestUtils.h"
 
-@interface RDRawSpeedDecoder ()
-+ (id<RDRawImage> _Nullable)decodeRawImageFromData:(const NSData *)data
-                                  correctRawValues:(bool)correctRawValues
-                                             error:(NSError * _Nullable __autoreleasing *)error;
-
-+ (id<RDRawImage> _Nullable)decodeRawImageFromFileURL:(const NSURL *)fileURL
-                                     correctRawValues:(bool)correctRawValues
-                                                error:(NSError * _Nullable __autoreleasing *)error;
-@end
-
 @implementation RawDecoderTestUtils
 
 + (NSURL *) urlForResource:(NSString *)resource
