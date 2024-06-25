@@ -68,25 +68,23 @@
       componentsPerPixel = rawImage->getCpp();
       cropOriginX = croppedImageArray.offsetCols;
       cropOriginY = croppedImageArray.offsetRows;
-      bitsPerSample = (uint16_t)ceil(log2(rawImage->whitePoint));
+      bitsPerSample = (uint16_t)ceil(log2(*rawImage->whitePoint));
       blackLevel = rawImageData->blackLevel;
-      if (rawImageData->blackLevelSeparate[0] == -1
-          || rawImageData->blackLevelSeparate[1] == -1
-          || rawImageData->blackLevelSeparate[2] == -1
-          || rawImageData->blackLevelSeparate[3] == -1) {
+      if (!rawImageData->blackLevelSeparate) {
         rawImageData->calculateBlackAreas();
       }
+      auto blackLevelSeparate = *(*rawImageData->blackLevelSeparate).getAsArray1DRef();
       NSMutableArray<NSNumber*> *componentBlackLevels0 = [NSMutableArray new];
-      for (auto blackLevel0 : rawImageData->blackLevelSeparate) {
+      for (auto blackLevel0 : blackLevelSeparate) {
         [componentBlackLevels0 addObject:[NSNumber numberWithInt:blackLevel0]];
       }
       componentBlackLevels = componentBlackLevels0;
       height = croppedImageArray.croppedHeight;
       width = croppedImageArray.croppedWidth;
-      uncroppedHeight = uncroppedImageArray.height;
-      uncroppedWidth = uncroppedImageArray.width;
+      uncroppedHeight = uncroppedImageArray.height();
+      uncroppedWidth = uncroppedImageArray.width();
       metadata = [[RDRawImageMetadata alloc] initFromImageMetadata:rawImageData->metadata];
-      whitePoint = rawImageData->whitePoint;
+      whitePoint = *rawImageData->whitePoint;
     } catch (std::exception& ex) {
       [RawSpeedRawImage setErrorWithMessage:[NSString stringWithUTF8String: ex.what()] error:error];
       return nil;
