@@ -44,8 +44,12 @@
     _canonicalCameraAlias = [NSString stringWithUTF8String:librawData->idata.normalized_model];
     _iso = (NSInteger)floor(librawData->other.iso_speed);
     _pixelAspectRatio = librawData->sizes.pixel_aspect;
-    // Not sure where to get this. Not sure I care either...
-//    _whiteBalanceCoefficients =
+    _whiteBalanceCoefficients = @[
+      [NSNumber numberWithFloat: librawData->color.cam_mul[0]],
+      [NSNumber numberWithFloat: librawData->color.cam_mul[1]],
+      [NSNumber numberWithFloat: librawData->color.cam_mul[2]],
+      [NSNumber numberWithFloat: librawData->color.cam_mul[3]]
+    ];
   }
   return self;
 }
