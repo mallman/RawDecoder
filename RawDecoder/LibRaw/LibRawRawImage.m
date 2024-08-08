@@ -70,7 +70,16 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
       return nil;
     }
     _librawData = librawData;
-    blackLevel = librawData->color.black;
+    if (librawData->color.black == 0) {
+      blackLevel = librawData->color.cblack[6];
+    } else {
+      blackLevel = librawData->color.black;
+    }
+    // We'll assume we have four component black levels, and they're all the same as the main black level
+    componentBlackLevels = @[[NSNumber numberWithLong:blackLevel],
+                             [NSNumber numberWithLong:blackLevel],
+                             [NSNumber numberWithLong:blackLevel],
+                             [NSNumber numberWithLong:blackLevel]];
     // We'll assume 2
     bytesPerPixel = 2;
     bytesPerRow = librawData->sizes.raw_pitch;
@@ -84,11 +93,6 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
                                      width:2
                                     height:2];
     free(cfaColors);
-    // We'll assume we have four component black levels, and they're all the same as the main black level
-    componentBlackLevels = @[[NSNumber numberWithLong:blackLevel],
-                             [NSNumber numberWithLong:blackLevel],
-                             [NSNumber numberWithLong:blackLevel],
-                             [NSNumber numberWithLong:blackLevel]];
     // We'll assume 1
     componentsPerPixel = 1;
     uncroppedHeight = librawData->sizes.height;
