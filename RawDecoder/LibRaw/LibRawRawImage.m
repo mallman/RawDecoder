@@ -1,6 +1,6 @@
 #import "LibRawRawImage.h"
 
-#import "../RDErrorDomain.h"
+#import "../RDError+Private.h"
 
 @interface RDCFA ()
 - (instancetype) initWithCFAColors:(RDCFAColor *)cfaColors
@@ -39,17 +39,6 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
 @synthesize whitePoint;
 @synthesize width;
 
-+ (void) setErrorWithMessage:(NSString *)errorMessage
-                       error:(NSError * _Nullable __autoreleasing *)error {
-  int errCode = -1;
-  NSDictionary *errorDictionary = @{
-    NSLocalizedDescriptionKey: errorMessage
-  };
-  *error = [NSError errorWithDomain:RDErrorDomain
-                               code:errCode
-                           userInfo:errorDictionary];
-}
-
 - (instancetype _Nullable) initFromLibrawData:(libraw_data_t *)librawData
                                      exifMake:(NSString * _Nullable)exifMake
                                     exifModel:(NSString * _Nullable)exifModel
@@ -58,19 +47,17 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
   if (self) {
     int rc = libraw_unpack(librawData);
     if (rc != LIBRAW_SUCCESS) {
-      [LibRawRawImage setErrorWithMessage:[NSString stringWithFormat:@"libraw_unpack failed with error code: %d", rc]
-                                    error:error];
+      RDSetError(error, RDErrorCodeUnpackFailed,
+                 [NSString stringWithFormat:@"libraw_unpack failed: %s", libraw_strerror(rc)], @(rc));
       return nil;
     }
     if (strcmp(librawData->idata.cdesc, "RGBG") != 0) {
-      [LibRawRawImage setErrorWithMessage:[NSString stringWithFormat:@"Unrecognized color filter array: %s",
-                                           librawData->idata.cdesc]
-                                    error:error];
+      RDSetError(error, RDErrorCodeUnsupportedCFA,
+                 [NSString stringWithFormat:@"Unrecognized color filter array: %s", librawData->idata.cdesc], nil);
       return nil;
     }
     if (!librawData->idata.filters) {
-      [LibRawRawImage setErrorWithMessage:[NSString stringWithFormat:@"Raw file has unknown or unsupported CFA"]
-                                    error:error];
+      RDSetError(error, RDErrorCodeUnsupportedCFA, @"Raw file has unknown or unsupported CFA", nil);
       return nil;
     }
     _librawData = librawData;

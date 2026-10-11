@@ -1,7 +1,7 @@
 #import "RawSpeedRawImage.h"
 
 #import "cameraMetaData.h"
-#import "../RDErrorDomain.h"
+#import "../RDError+Private.h"
 
 @interface RDCFA ()
 - (instancetype) initWithCFA:(rawspeed::ColorFilterArray)cfa;
@@ -35,17 +35,6 @@
 @synthesize whitePoint;
 @synthesize width;
 
-+ (void) setErrorWithMessage:(NSString *)errorMessage
-                       error:(NSError * _Nullable __autoreleasing *)error {
-  int errCode = -1;
-  NSDictionary *errorDictionary = @{
-    NSLocalizedDescriptionKey: errorMessage
-  };
-  *error = [NSError errorWithDomain:RDErrorDomain
-                               code:errCode
-                           userInfo:errorDictionary];
-}
-
 - (instancetype _Nullable) initWithRawImage:(rawspeed::RawImage)rawImage
                                       error:(NSError * _Nullable __autoreleasing *)error {
   self = [super init];
@@ -60,7 +49,7 @@
       bytesPerPixel = rawImageData->getBpp();
       bytesPerRow = rawImageData->pitch;
       if (!rawImage->isCFA) {
-        [RawSpeedRawImage setErrorWithMessage:@"Raw image has no color filter array" error:error];
+        RDSetError(error, RDErrorCodeNoCFA, @"Raw image has no color filter array", nil);
         return nil;
       }
       _colorFilterArray = rawImageData->cfa;
@@ -86,7 +75,7 @@
       metadata = [[RDRawImageMetadata alloc] initFromImageMetadata:rawImageData->metadata];
       whitePoint = *rawImageData->whitePoint;
     } catch (std::exception& ex) {
-      [RawSpeedRawImage setErrorWithMessage:[NSString stringWithUTF8String: ex.what()] error:error];
+      RDSetError(error, RDErrorCodeDecodeFailed, [NSString stringWithUTF8String:ex.what()], nil);
       return nil;
     }
   }

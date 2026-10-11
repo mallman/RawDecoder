@@ -717,6 +717,32 @@
                                               tolerance:2];
 }
 
+- (void) testErrorsOnUndecodableData {
+  NSMutableData *garbageBytes = [NSMutableData dataWithLength:4096];
+  memset(garbageBytes.mutableBytes, 0x5A, garbageBytes.length);
+  // An immutable copy: the decode methods take `const NSData *`, which Objective-C++ will
+  // not accept an NSMutableData for (review item A1)
+  NSData *garbage = [garbageBytes copy];
+
+  // A NULL error pointer is legal and must not crash
+  XCTAssertNil([RDLibRawDecoder decodeRawImageFromData:garbage error:NULL]);
+  XCTAssertNil([RDRawSpeedDecoder decodeRawImageFromData:garbage error:NULL]);
+
+  NSError *error = nil;
+  XCTAssertNil([RDLibRawDecoder decodeRawImageFromData:garbage error:&error]);
+  XCTAssertEqualObjects(error.domain, RDErrorDomain);
+  XCTAssertEqual(error.code, RDErrorCodeOpenFailed);
+  XCTAssertNotNil(error.userInfo[RDBackendErrorCodeKey]);
+  XCTAssertGreaterThan(error.localizedDescription.length, 0u);
+
+  error = nil;
+  XCTAssertNil([RDRawSpeedDecoder decodeRawImageFromData:garbage error:&error]);
+  XCTAssertEqualObjects(error.domain, RDErrorDomain);
+  XCTAssertEqual(error.code, RDErrorCodeDecodeFailed);
+  XCTAssertNil(error.userInfo[RDBackendErrorCodeKey]);
+  XCTAssertGreaterThan(error.localizedDescription.length, 0u);
+}
+
 + (void) checkDecodeDataVersusURLForResource:(NSString *)resource
                                withExtension:(NSString *)extension
                                      decoder:(id<RDRawImageDecoder>)decoder {

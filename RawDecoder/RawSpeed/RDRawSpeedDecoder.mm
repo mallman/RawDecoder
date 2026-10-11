@@ -2,22 +2,11 @@
 #import "RawSpeedRawImage.h"
 
 #import "cameraMetaData.h"
-#import "../RDErrorDomain.h"
+#import "../RDError+Private.h"
 
 #import <RawSpeed-API.h>
 
 @implementation RDRawSpeedDecoder
-+ (void) setErrorWithMessage:(NSString *)errorMessage
-                       error:(NSError * _Nullable __autoreleasing *)error {
-  int errCode = -1;
-  NSDictionary *errorDictionary = @{
-    NSLocalizedDescriptionKey: errorMessage
-  };
-  *error = [NSError errorWithDomain:RDErrorDomain
-                               code:errCode
-                           userInfo:errorDictionary];
-}
-
 + (id<RDRawImage> _Nullable)decodeRawImageFromData:(nonnull const NSData *)data
                                              error:(NSError * _Nullable __autoreleasing *)error {
   return [self decodeRawImageFromData:data
@@ -35,7 +24,7 @@
                                             error:error];
     return rawImage;
   } catch (std::exception& ex) {
-    [self setErrorWithMessage:[NSString stringWithUTF8String: ex.what()] error:error];
+    RDSetError(error, RDErrorCodeDecodeFailed, [NSString stringWithUTF8String:ex.what()], nil);
     return nil;
   }
 }
@@ -60,7 +49,7 @@
     storage.reset();
     return rawImage;
   } catch (std::exception& ex) {
-    [self setErrorWithMessage:[NSString stringWithUTF8String: ex.what()] error:error];
+    RDSetError(error, RDErrorCodeDecodeFailed, [NSString stringWithUTF8String:ex.what()], nil);
     return nil;
   }
 }

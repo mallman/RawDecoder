@@ -129,6 +129,7 @@
 		4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDCFAColor.h; sourceTree = "<group>"; };
 		4EE929602A89B0CB0048D918 /* RDCFA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RDCFA.mm; sourceTree = "<group>"; };
 		4EE929612A89B0CB0048D918 /* RDErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDErrorDomain.h; sourceTree = "<group>"; };
+		4EC0FFEE2BD10001001A0021 /* RDError+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RDError+Private.h"; sourceTree = "<group>"; };
 		4EE929622A89B0CB0048D918 /* RDRawImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDRawImageMetadata.h; sourceTree = "<group>"; };
 		4EE929632A89B0CB0048D918 /* RDRawImageMetadata.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RDRawImageMetadata.mm; sourceTree = "<group>"; };
 		4EE929652A89B0CB0048D918 /* RawSpeedRawImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawSpeedRawImage.h; sourceTree = "<group>"; };
@@ -242,6 +243,7 @@
 				4EE9296F2A89B0CB0048D918 /* RDCFA.h */,
 				4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */,
 				4EE929612A89B0CB0048D918 /* RDErrorDomain.h */,
+				4EC0FFEE2BD10001001A0021 /* RDError+Private.h */,
 				4EE929692A89B0CB0048D918 /* RDRawImage.h */,
 				4EE9296D2A89B0CB0048D918 /* RDRawImageDecoder.h */,
 				4EE929622A89B0CB0048D918 /* RDRawImageMetadata.h */,
