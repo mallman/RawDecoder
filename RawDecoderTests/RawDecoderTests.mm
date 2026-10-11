@@ -119,8 +119,8 @@
   RDRawImageMetadata *metadata = rawImage.metadata;
   XCTAssertEqual(metadata.pixelAspectRatio, 1);
   XCTAssertEqual(metadata.iso, 100);
-  XCTAssertEqualObjects(metadata.cameraMake, @"Nikon");
-  XCTAssertEqualObjects(metadata.cameraModel, @"D200");
+  XCTAssertEqualObjects(metadata.cameraMake, @"NIKON CORPORATION");
+  XCTAssertEqualObjects(metadata.cameraModel, @"NIKON D200");
   XCTAssertEqualObjects(metadata.canonicalCameraMake, @"Nikon");
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D200");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D200");
@@ -240,8 +240,8 @@
   RDRawImageMetadata *metadata = rawImage.metadata;
   XCTAssertEqual(metadata.pixelAspectRatio, 1);
   XCTAssertEqual(metadata.iso, 100);
-  XCTAssertEqualObjects(metadata.cameraMake, @"Nikon");
-  XCTAssertEqualObjects(metadata.cameraModel, @"D800E");
+  XCTAssertEqualObjects(metadata.cameraMake, @"NIKON CORPORATION");
+  XCTAssertEqualObjects(metadata.cameraModel, @"NIKON D800E");
   XCTAssertEqualObjects(metadata.canonicalCameraMake, @"Nikon");
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D800E");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D800E");
@@ -361,8 +361,8 @@
   RDRawImageMetadata *metadata = rawImage.metadata;
   XCTAssertEqual(metadata.pixelAspectRatio, 1);
   XCTAssertEqual(metadata.iso, 400);
-  XCTAssertEqualObjects(metadata.cameraMake, @"Nikon");
-  XCTAssertEqualObjects(metadata.cameraModel, @"D810");
+  XCTAssertEqualObjects(metadata.cameraMake, @"NIKON CORPORATION");
+  XCTAssertEqualObjects(metadata.cameraModel, @"NIKON D810");
   XCTAssertEqualObjects(metadata.canonicalCameraMake, @"Nikon");
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D810");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D810");
@@ -482,8 +482,8 @@
   RDRawImageMetadata *metadata = rawImage.metadata;
   XCTAssertEqual(metadata.pixelAspectRatio, 1);
   XCTAssertEqual(metadata.iso, 64);
-  XCTAssertEqualObjects(metadata.cameraMake, @"Nikon");
-  XCTAssertEqualObjects(metadata.cameraModel, @"D850");
+  XCTAssertEqualObjects(metadata.cameraMake, @"NIKON CORPORATION");
+  XCTAssertEqualObjects(metadata.cameraModel, @"NIKON D850");
   XCTAssertEqualObjects(metadata.canonicalCameraMake, @"Nikon");
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"D850");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Nikon D850");
@@ -655,7 +655,7 @@
   RDRawImageMetadata *metadata = rawImage.metadata;
   XCTAssertEqual(metadata.pixelAspectRatio, 1);
   XCTAssertEqual(metadata.iso, 640);
-  XCTAssertEqualObjects(metadata.cameraMake, @"Sony");
+  XCTAssertEqualObjects(metadata.cameraMake, @"SONY");
   XCTAssertEqualObjects(metadata.cameraModel, @"ILCE-1");
   XCTAssertEqualObjects(metadata.canonicalCameraMake, @"Sony");
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"ILCE-1");
@@ -743,6 +743,8 @@
                                                             withDecoder:[RDLibRawDecoder self]];
 
   XCTAssertEqual(rdRawImage.bitsPerSample, libRawImage.bitsPerSample);
+  XCTAssertEqualObjects(rdRawImage.metadata.cameraMake, libRawImage.metadata.cameraMake);
+  XCTAssertEqualObjects(rdRawImage.metadata.cameraModel, libRawImage.metadata.cameraModel);
   XCTAssertEqual(rdRawImage.blackLevel, libRawImage.blackLevel);
   XCTAssertEqual(rdRawImage.cropOriginX, libRawImage.cropOriginX);
   XCTAssertEqual(rdRawImage.cropOriginY, libRawImage.cropOriginY);

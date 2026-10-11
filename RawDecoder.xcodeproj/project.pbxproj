@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		4E0302D12A8D457F002D2B59 /* RDLibRawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E0302D22A8D457F002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
+		4EC0FFEE2BD10001001A0011 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
+		4EC0FFEE2BD10001001A0012 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
+		4EC0FFEE2BD10001001A0013 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
 		4E0302D52A8D458F002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
 		4E0302D62A8D4591002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
 		4E0302D72A8D4595002D2B59 /* RDLibRawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -109,6 +112,8 @@
 /* Begin PBXFileReference section */
 		4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDLibRawDecoder.h; sourceTree = "<group>"; };
 		4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RDLibRawDecoder.m; sourceTree = "<group>"; };
+		4EC0FFEE2BD10001001A0001 /* LibRawExifCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibRawExifCapture.h; sourceTree = "<group>"; };
+		4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LibRawExifCapture.mm; sourceTree = "<group>"; };
 		4E0302DC2A8D4E68002D2B59 /* RDErrorDomain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RDErrorDomain.m; sourceTree = "<group>"; };
 		4E0302E02A8D4FC7002D2B59 /* RDRawSpeedDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDRawSpeedDecoder.h; sourceTree = "<group>"; };
 		4E0302E12A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RDRawSpeedDecoder.mm; sourceTree = "<group>"; };
@@ -286,6 +291,8 @@
 				4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */,
 				4EE9296B2A89B0CB0048D918 /* LibRawRawImage.m */,
 				4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */,
+				4EC0FFEE2BD10001001A0001 /* LibRawExifCapture.h */,
+				4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */,
 			);
 			path = LibRaw;
 			sourceTree = "<group>";
@@ -577,6 +584,7 @@
 				4E0302DD2A8D4E68002D2B59 /* RDErrorDomain.m in Sources */,
 				4EE929722A89B0CB0048D918 /* RDCFA.mm in Sources */,
 				4E0302D22A8D457F002D2B59 /* RDLibRawDecoder.m in Sources */,
+				4EC0FFEE2BD10001001A0011 /* LibRawExifCapture.mm in Sources */,
 				4E0302E52A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */,
 				4EE929772A89B0CB0048D918 /* cameraMetaData.mm in Sources */,
 				4EE929782A89B0CB0048D918 /* RawSpeedRawImage.mm in Sources */,
@@ -603,6 +611,7 @@
 				4EE929C22A89BF160048D918 /* LibRawRawImage.m in Sources */,
 				4EE929C72A89BF1D0048D918 /* RawSpeedRawImage.mm in Sources */,
 				4E0302D52A8D458F002D2B59 /* RDLibRawDecoder.m in Sources */,
+				4EC0FFEE2BD10001001A0012 /* LibRawExifCapture.mm in Sources */,
 				4E0302E62A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */,
 				4EE929BB2A89BF040048D918 /* RDRawImageMetadata.mm in Sources */,
 			);
@@ -618,6 +627,7 @@
 				4EE929E42A89C0830048D918 /* LibRawRawImage.m in Sources */,
 				4EE929E52A89C0830048D918 /* RawSpeedRawImage.mm in Sources */,
 				4E0302D62A8D4591002D2B59 /* RDLibRawDecoder.m in Sources */,
+				4EC0FFEE2BD10001001A0013 /* LibRawExifCapture.mm in Sources */,
 				4E0302E72A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm in Sources */,
 				4EE929E72A89C0830048D918 /* RDRawImageMetadata.mm in Sources */,
 			);

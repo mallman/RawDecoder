@@ -7,7 +7,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LibRawRawImage: NSObject <RDRawImage>
 - (instancetype)init NS_UNAVAILABLE;
 
+/// Takes ownership of `librawData` on success. `exifMake`/`exifModel` are the TIFF/EXIF tags
+/// as captured during open, or nil when the container has none
 - (instancetype _Nullable) initFromLibrawData:(libraw_data_t *)librawData
+                                     exifMake:(NSString * _Nullable)exifMake
+                                    exifModel:(NSString * _Nullable)exifModel
                                         error:(NSError * _Nullable __autoreleasing *)error;
 @end
 

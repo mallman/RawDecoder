@@ -420,7 +420,7 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
 }
 
 - (void)testCanonR8WithLibRaw {
-  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageAtPixlsFilePath:@"Canon/Canon EOS R8/CRAW_FULL_FRAME.CR3"
+  id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageAtPixlsFilePath:@"Canon/EOS R8/CRAW_FULL_FRAME.CR3"
                                                              withDecoder:[RDLibRawDecoder self]];
   if (rawImage == nil) {
     return;
@@ -465,7 +465,7 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   XCTAssertEqual(metadata.pixelAspectRatio, 1);
   XCTAssertEqual(metadata.iso, 200);
   XCTAssertEqualObjects(metadata.cameraMake, @"Canon");
-  XCTAssertEqualObjects(metadata.cameraModel, @"EOS R8");
+  XCTAssertEqualObjects(metadata.cameraModel, @"Canon EOS R8");
   XCTAssertEqualObjects(metadata.canonicalCameraMake, @"Canon");
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"EOS R8");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Canon EOS R8");
@@ -580,6 +580,28 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   XCTAssertEqualObjects(metadata.canonicalCameraModel, @"DSC-R1");
   XCTAssertEqualObjects(metadata.canonicalCameraId, @"Sony DSC-R1");
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"DSC-R1");
+}
+
+/// CIFF-based CRW files carry no TIFF Make/Model tags. LibRaw can only offer its rewritten
+/// strings, so the LibRaw decoder returns nil; RawSpeed reads CIFF's own make/model record.
+/// The canonical fields agree regardless
+- (void)testCanonS70CRWMakeModel {
+  NSString *path = @"Canon/PowerShot S70/RAW_CANON_S70_SRGB.CRW";
+  id<RDRawImage> libRawImage = [RawDecoderTestUtils rawImageAtPixlsFilePath:path
+                                                                withDecoder:[RDLibRawDecoder self]];
+  id<RDRawImage> rawSpeedImage = [RawDecoderTestUtils rawImageAtPixlsFilePath:path
+                                                                  withDecoder:[RDRawSpeedDecoder self]];
+  if (libRawImage == nil || rawSpeedImage == nil) {
+    return;
+  }
+
+  XCTAssertNil(libRawImage.metadata.cameraMake);
+  XCTAssertNil(libRawImage.metadata.cameraModel);
+  XCTAssertEqualObjects(rawSpeedImage.metadata.cameraMake, @"Canon");
+  XCTAssertEqualObjects(rawSpeedImage.metadata.cameraModel, @"Canon PowerShot S70");
+
+  XCTAssertEqualObjects(libRawImage.metadata.canonicalCameraMake, rawSpeedImage.metadata.canonicalCameraMake);
+  XCTAssertEqualObjects(libRawImage.metadata.canonicalCameraModel, rawSpeedImage.metadata.canonicalCameraModel);
 }
 
 + (void)testDecodingOfFilesWithExtension:(NSString *)fileExtension

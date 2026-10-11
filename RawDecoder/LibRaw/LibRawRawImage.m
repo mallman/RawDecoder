@@ -9,7 +9,9 @@
 @end
 
 @interface RDRawImageMetadata ()
-- (instancetype)initFromLibrawData:(libraw_data_t *)librawData;
+- (instancetype)initFromLibrawData:(libraw_data_t *)librawData
+                          exifMake:(NSString * _Nullable)exifMake
+                         exifModel:(NSString * _Nullable)exifModel;
 @end
 
 RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, long y);
@@ -49,6 +51,8 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
 }
 
 - (instancetype _Nullable) initFromLibrawData:(libraw_data_t *)librawData
+                                     exifMake:(NSString * _Nullable)exifMake
+                                    exifModel:(NSString * _Nullable)exifModel
                                         error:(NSError * _Nullable __autoreleasing *)error {
   self = [super init];
   if (self) {
@@ -110,7 +114,9 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
     }
     imageData = &librawData->rawdata.raw_image[cropOriginX + cropOriginY * bytesPerRow / 2];
     uncroppedImageData = librawData->rawdata.raw_image;
-    metadata = [[RDRawImageMetadata alloc] initFromLibrawData:librawData];
+    metadata = [[RDRawImageMetadata alloc] initFromLibrawData:librawData
+                                                      exifMake:exifMake
+                                                     exifModel:exifModel];
     whitePoint = librawData->color.linear_max[0];
     bitsPerSample = (uint16_t)ceil(log2(whitePoint));
   }

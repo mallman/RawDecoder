@@ -8,8 +8,8 @@
 - (instancetype)initFromImageMetadata:(rawspeed::ImageMetaData)metadata {
   self = [super init];
   if (self) {
-    _cameraMake = [NSString stringWithUTF8String:metadata.make.data()];
-    _cameraModel = [NSString stringWithUTF8String:metadata.model.data()];
+    _cameraMake = metadata.make.empty() ? nil : [NSString stringWithUTF8String:metadata.make.data()];
+    _cameraModel = metadata.model.empty() ? nil : [NSString stringWithUTF8String:metadata.model.data()];
     NSString *cameraMode = [NSString stringWithUTF8String:metadata.mode.data()];
     if ([cameraMode length] == 0) {
       _cameraMode = nil;
@@ -32,11 +32,15 @@
   return self;
 }
 
-- (instancetype)initFromLibrawData:(libraw_data_t *)librawData {
+- (instancetype)initFromLibrawData:(libraw_data_t *)librawData
+                          exifMake:(NSString * _Nullable)exifMake
+                         exifModel:(NSString * _Nullable)exifModel {
   self = [super init];
   if (self) {
-    _cameraMake = [NSString stringWithUTF8String:librawData->idata.make];
-    _cameraModel = [NSString stringWithUTF8String:librawData->idata.model];
+    // LibRaw rewrites idata.make/model; the originals come from the EXIF capture, and are
+    // nil for containers without a TIFF structure (CIFF-based CRW, MDC)
+    _cameraMake = exifMake;
+    _cameraModel = exifModel;
     _cameraMode = nil; // I don't think we'll get this out of LibRaw
     _canonicalCameraMake = [NSString stringWithUTF8String:librawData->idata.normalized_make];
     _canonicalCameraModel = [NSString stringWithUTF8String:librawData->idata.normalized_model];
