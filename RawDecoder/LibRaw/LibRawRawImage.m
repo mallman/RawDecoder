@@ -87,6 +87,14 @@ static unsigned positiveMod(NSInteger v, unsigned period) {
                  @"Fujifilm SuperCCD sensor layout is not supported by the LibRaw decoder", nil);
       return nil;
     }
+    // The wrapper reads raw_image: one 16-bit component per pixel. LibRaw fills color3/color4
+    // or float buffers instead for some files; so far every such file also has filters == 0
+    // and is rejected above, but nothing guarantees the pairing
+    if (librawData->rawdata.raw_image == NULL) {
+      RDSetError(error, RDErrorCodeUnsupportedPixelFormat,
+                 @"Unsupported pixel format: LibRaw did not produce a single-component 16-bit image", nil);
+      return nil;
+    }
     _librawData = librawData;
     const libraw_image_sizes_t *sizes = &librawData->sizes;
 

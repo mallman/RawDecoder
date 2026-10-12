@@ -42,16 +42,26 @@
     try {
       _rawImage = new rawspeed::RawImage(rawImage);
       rawspeed::RawImageData *rawImageData = _rawImage->get();
+      // Check the format before touching the pixel data: the accessors below assume 16-bit
+      // samples, and RawSpeed decodes some files (floating-point DNGs) to 32-bit floats
+      if (!rawImage->isCFA) {
+        RDSetError(error, RDErrorCodeNoCFA, @"Raw image has no color filter array", nil);
+        return nil;
+      }
+      if (rawImageData->getDataType() != rawspeed::RawImageType::UINT16 ||
+          rawImageData->getCpp() != 1 || rawImageData->getBpp() != 2) {
+        RDSetError(error, RDErrorCodeUnsupportedPixelFormat,
+                   [NSString stringWithFormat:@"Unsupported pixel format: %s, %u component(s), %u bytes per pixel",
+                    rawImageData->getDataType() == rawspeed::RawImageType::F32 ? "32-bit float" : "16-bit integer",
+                    rawImageData->getCpp(), rawImageData->getBpp()], nil);
+        return nil;
+      }
       rawspeed::CroppedArray2DRef<uint16_t> croppedImageArray = rawImageData->getU16DataAsCroppedArray2DRef();
       imageData = &croppedImageArray(0, 0);
       rawspeed::Array2DRef<uint16_t> uncroppedImageArray = rawImageData->getU16DataAsUncroppedArray2DRef();
       uncroppedImageData = &uncroppedImageArray(0, 0);
       bytesPerPixel = rawImageData->getBpp();
       bytesPerRow = rawImageData->pitch;
-      if (!rawImage->isCFA) {
-        RDSetError(error, RDErrorCodeNoCFA, @"Raw image has no color filter array", nil);
-        return nil;
-      }
       componentsPerPixel = rawImage->getCpp();
       cropOriginX = croppedImageArray.offsetCols;
       cropOriginY = croppedImageArray.offsetRows;

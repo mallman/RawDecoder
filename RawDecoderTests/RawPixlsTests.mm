@@ -739,6 +739,27 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   XCTAssertGreaterThan(compared, 0);
 }
 
+/// RawSpeed decodes this HDRMerge DNG to 32-bit floats, which the API cannot represent, so it
+/// must refuse it rather than hand out float bytes as uint16 samples. LibRaw converts floating
+/// point DNGs to 16-bit integers during unpack, so it decodes the same file
+- (void)testFloatingPointDNGPixelFormat {
+  NSString *path = @"Canon/EOS 5D Mark III/hdrmerge-bayer-fp32-uncompressed.dng";
+  NSURL *url = [NSURL fileURLWithPath:[[RawDecoderTestUtils rawPixlsDataPath] stringByAppendingPathComponent:path]];
+  if (![[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+    return;
+  }
+
+  NSError *error = nil;
+  XCTAssertNil([RDRawSpeedDecoder decodeRawImageFromFileURL:url error:&error]);
+  XCTAssertEqualObjects(error.domain, RDErrorDomain);
+  XCTAssertEqual(error.code, RDErrorCodeUnsupportedPixelFormat);
+
+  id<RDRawImage> libRawImage = [RDLibRawDecoder decodeRawImageFromFileURL:url error:NULL];
+  XCTAssertNotNil(libRawImage);
+  XCTAssertEqual(libRawImage.bytesPerPixel, 2);
+  XCTAssertEqual(libRawImage.componentsPerPixel, 1);
+}
+
 /// LibRaw 0.22.2 reads a linear_max of 153 for this body, below its black level of 511, so the
 /// white point must come from the fallback (LibRaw's maximum, 16383)
 - (void)testCanonR50VWhitePointWithLibRaw {

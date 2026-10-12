@@ -25,12 +25,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// per-camera value
 @property (readonly, nullable) NSNumber *blackLevel;
 
-/// The domain of values of decoded pixels, expressed in bytes. The current implementation assumes
-/// a value of 2 bytes, i.e. 16-bits. Floating point raw files are not supported
+/// The size of one decoded pixel in bytes. Always 2: pixels are 16-bit unsigned integers.
+/// Decoding fails with `RDErrorCodeUnsupportedPixelFormat` for anything else, such as a
+/// floating-point DNG
 @property (readonly) NSInteger bytesPerPixel;
 
 /// Also called pitch
 @property (readonly) NSInteger bytesPerRow;
+/// The color filter array pattern, starting at the crop origin. It is not always 2x2: Fujifilm
+/// X-Trans sensors have a 6x6 pattern, some Leaf and Kodak backs a 16x16 one, and a few Bayer
+/// sensors repeat only every 8 rows. Index it by `cfa.width` and `cfa.height`, never by 2
 @property (readonly) RDCFA    *cfa;
 
 /// The black level for each position of the 2x2 tile at the crop origin, always four values.
@@ -39,9 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// This is the authoritative black level; subtract it per pixel
 @property (readonly) NSArray<NSNumber *> *componentBlackLevels;
 
-/// Color components per pixel. Supported raw files have one component per pixel. Typical full
-/// color images would have 3 or 4 components per pixel, depending on the presence of an
-/// alpha component
+/// Color components per pixel. Always 1: each pixel holds one sample, whose color is given by
+/// `cfa`. Images with several components per pixel (Canon sRAW/mRAW, linear DNGs) are rejected
+/// with `RDErrorCodeNoCFA` or `RDErrorCodeUnsupportedPixelFormat`
 @property (readonly) NSInteger componentsPerPixel;
 
 /// The horizontal offset of the sensor crop relative to the origin of the uncropped sensor image.

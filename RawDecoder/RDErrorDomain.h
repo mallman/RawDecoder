@@ -27,6 +27,9 @@ typedef NS_ERROR_ENUM(RDErrorDomain, RDErrorCode) {
 
   /// The backend failed while decoding. RawSpeed reports every failure this way
   RDErrorCodeDecodeFailed = 5,
+
+  /// The decoded image is not one 16-bit component per pixel, e.g. a floating-point DNG
+  RDErrorCodeUnsupportedPixelFormat = 6,
 };
 
 #endif /* RDErrorDomain_h */

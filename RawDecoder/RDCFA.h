@@ -10,15 +10,18 @@ __attribute__((objc_subclassing_restricted))
 /// https://en.wikipedia.org/wiki/Color_filter_array for more information
 @interface RDCFA: NSObject
 
-/// The height of the CFA
+/// The height of the CFA pattern in pixels: 2 for most Bayer sensors, 6 for Fujifilm X-Trans,
+/// 8 or 16 for a few others
 @property (readonly) NSInteger height;
 
-/// The width of the CFA
+/// The width of the CFA pattern in pixels: 2 for Bayer sensors, 6 for Fujifilm X-Trans, 16 for
+/// some Leaf and Kodak backs
 @property (readonly) NSInteger width;
 
 /// An array of numbers representing TIFF/EXIF colors from the TIFF/EXIF tag 0xA302, where
-/// the color at (x, y) is given by exifCFAPattern[x + y * width]. Note that the origin of this
-/// coordinate system is at the top left corner of the CFA pattern
+/// the color at (x, y) is given by exifCFAPattern[x + y * width]. It has width * height
+/// entries. Note that the origin of this coordinate system is at the top left corner of the CFA
+/// pattern
 @property (readonly) NSArray<NSNumber*> *exifCFAPattern;
 
 - (instancetype)init NS_UNAVAILABLE;
