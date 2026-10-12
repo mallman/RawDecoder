@@ -61,16 +61,24 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
       return nil;
     }
     _librawData = librawData;
-    if (librawData->color.black == 0) {
-      blackLevel = librawData->color.cblack[6];
-    } else {
-      blackLevel = librawData->color.black;
+    // LibRaw's black level for a pixel is black + cblack[color] + the pattern entry
+    // cblack[6 + (row % cblack[4]) * cblack[5] + (col % cblack[5])] when a pattern is present.
+    // Evaluate it at the 2x2 positions in the same coordinates the cfa is built from
+    const unsigned *cblack = librawData->color.cblack;
+    const unsigned patternRows = cblack[4], patternCols = cblack[5];
+    NSMutableArray<NSNumber *> *levels = [NSMutableArray arrayWithCapacity:4];
+    for (int y = 0; y < 2; y++) {
+      for (int x = 0; x < 2; x++) {
+        int color = libraw_COLOR(librawData, y, x);
+        unsigned level = librawData->color.black + (color >= 0 && color < 4 ? cblack[color] : 0);
+        if (patternRows > 0 && patternCols > 0) {
+          level += cblack[6 + (y % patternRows) * patternCols + (x % patternCols)];
+        }
+        [levels addObject:@(level)];
+      }
     }
-    // We'll assume we have four component black levels, and they're all the same as the main black level
-    componentBlackLevels = @[[NSNumber numberWithLong:blackLevel],
-                             [NSNumber numberWithLong:blackLevel],
-                             [NSNumber numberWithLong:blackLevel],
-                             [NSNumber numberWithLong:blackLevel]];
+    componentBlackLevels = levels;
+    blackLevel = [[NSSet setWithArray:levels] count] == 1 ? levels[0] : nil;
     // We'll assume 2
     bytesPerPixel = 2;
     bytesPerRow = librawData->sizes.raw_pitch;

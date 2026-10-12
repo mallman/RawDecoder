@@ -18,7 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 14—or 12 for older cameras. To be precise, this value is equal to
 /// `(uint16_t)ceil(log2(self.whitePoint))`
 @property (readonly) NSInteger bitsPerSample;
-@property (readonly) NSInteger blackLevel;
+
+/// The black level shared by every CFA position, or nil when the positions have different
+/// black levels. Use `componentBlackLevels`, which is always exact, when this is nil. Decoders
+/// can disagree: one may read per-channel levels from the file where the other uses a single
+/// per-camera value
+@property (readonly, nullable) NSNumber *blackLevel;
 
 /// The domain of values of decoded pixels, expressed in bytes. The current implementation assumes
 /// a value of 2 bytes, i.e. 16-bits. Floating point raw files are not supported
@@ -27,6 +32,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// Also called pitch
 @property (readonly) NSInteger bytesPerRow;
 @property (readonly) RDCFA    *cfa;
+
+/// The black level for each position of the 2x2 tile at the crop origin, always four values.
+/// `componentBlackLevels[x + 2 * y]` belongs to the pixels at cropped coordinates whose
+/// `(col % 2, row % 2)` is `(x, y)`, the same frame as `cfa`, `colorAtX:y:` and `imageData`.
+/// This is the authoritative black level; subtract it per pixel
 @property (readonly) NSArray<NSNumber *> *componentBlackLevels;
 
 /// Color components per pixel. Supported raw files have one component per pixel. Typical full

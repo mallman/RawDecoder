@@ -58,16 +58,23 @@
       cropOriginX = croppedImageArray.offsetCols;
       cropOriginY = croppedImageArray.offsetRows;
       bitsPerSample = (uint16_t)ceil(log2(*rawImage->whitePoint));
-      blackLevel = rawImageData->blackLevel;
       if (!rawImageData->blackLevelSeparate) {
         rawImageData->calculateBlackAreas();
       }
+      // RawSpeed indexes blackLevelSeparate by parity in uncropped sensor coordinates
+      // (2 * (y & 1) + (x & 1)); its own scaling re-indexes by the crop offset. Do the same so
+      // componentBlackLevels is in the cropped frame, like cfa and imageData. RawSpeed's scalar
+      // blackLevel is -1 whenever the levels are per-channel, so it is not used
       auto blackLevelSeparate = *(*rawImageData->blackLevelSeparate).getAsArray1DRef();
-      NSMutableArray<NSNumber*> *componentBlackLevels0 = [NSMutableArray new];
-      for (auto blackLevel0 : blackLevelSeparate) {
-        [componentBlackLevels0 addObject:[NSNumber numberWithInt:blackLevel0]];
+      NSMutableArray<NSNumber *> *levels = [NSMutableArray arrayWithCapacity:4];
+      for (NSInteger y = 0; y < 2; y++) {
+        for (NSInteger x = 0; x < 2; x++) {
+          int index = (int)(2 * ((y + cropOriginY) & 1) + ((x + cropOriginX) & 1));
+          [levels addObject:@(blackLevelSeparate(index))];
+        }
       }
-      componentBlackLevels = componentBlackLevels0;
+      componentBlackLevels = levels;
+      blackLevel = [[NSSet setWithArray:levels] count] == 1 ? levels[0] : nil;
       height = croppedImageArray.croppedHeight;
       width = croppedImageArray.croppedWidth;
       uncroppedHeight = uncroppedImageArray.height();

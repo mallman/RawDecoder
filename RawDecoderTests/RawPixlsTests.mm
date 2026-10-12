@@ -450,7 +450,7 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   ];
   XCTAssertEqualObjects(expectedExifCFAPattern, rawImage.cfa.exifCFAPattern);
 
-  XCTAssertEqual(rawImage.blackLevel, 512);
+  XCTAssertEqualObjects(rawImage.blackLevel, @512);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:512],
     [NSNumber numberWithInt:512],
@@ -504,7 +504,7 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   ];
   XCTAssertEqualObjects(expectedExifCFAPattern, rawImage.cfa.exifCFAPattern);
 
-  XCTAssertEqual(rawImage.blackLevel, 400);
+  XCTAssertEqualObjects(rawImage.blackLevel, @400);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:400],
     [NSNumber numberWithInt:400],
@@ -559,7 +559,7 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   ];
   XCTAssertEqualObjects(expectedExifCFAPattern, rawImage.cfa.exifCFAPattern);
 
-  XCTAssertEqual(rawImage.blackLevel, 511);
+  XCTAssertEqualObjects(rawImage.blackLevel, @511);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:511],
     [NSNumber numberWithInt:511],
@@ -583,7 +583,8 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
 }
 
 /// This SR2 carries no linear_max, so LibRaw's white point must come from its fallback
-/// rather than being 0. RawSpeed reports 16383 for the same file
+/// rather than being 0. RawSpeed reports 16383 for the same file. It also has per-channel
+/// black levels, which LibRaw reads and RawSpeed does not
 - (void)testSonyDSCR1WhitePointWithLibRaw {
   id<RDRawImage> rawImage = [RawDecoderTestUtils
                              rawImageAtPixlsFilePath:@"Sony/DSC-R1/_DSC1477.SR2"
@@ -594,8 +595,12 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
 
   XCTAssertEqual(rawImage.whitePoint, 16383);
   XCTAssertEqual(rawImage.bitsPerSample, 14);
-  XCTAssertEqual(rawImage.blackLevel, 511);
-  XCTAssertGreaterThan(rawImage.whitePoint, rawImage.blackLevel);
+  // LibRaw reads per-channel offsets 3, 0, 1, 2 (R, G, B, G2) on top of 511 from this SR2,
+  // so the four CFA positions differ and there is no single black level. The CFA is GRBG
+  XCTAssertNil(rawImage.blackLevel);
+  NSArray<NSNumber *> *expectedComponentBlackLevels = @[@511, @514, @512, @513];
+  XCTAssertEqualObjects(rawImage.componentBlackLevels, expectedComponentBlackLevels);
+  XCTAssertGreaterThan(rawImage.whitePoint, 514);
 }
 
 /// This CRW records no as-shot white balance. Both decoders must say so with nil
@@ -720,8 +725,16 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
                               @"invariant bytesPerRow >= row of pixels: %@", who);
 
   // Levels: a usable range between black and white (review B2)
-  XCTAssertGreaterThanOrEqual(rawImage.blackLevel, 0, @"invariant blackLevel >= 0: %@", who);
-  XCTAssertGreaterThan(rawImage.whitePoint, rawImage.blackLevel, @"invariant whitePoint > blackLevel: %@", who);
+  NSArray<NSNumber *> *levels = rawImage.componentBlackLevels;
+  NSNumber *maxLevel = [levels valueForKeyPath:@"@max.self"];
+  NSNumber *minLevel = [levels valueForKeyPath:@"@min.self"];
+  XCTAssertGreaterThanOrEqual(minLevel.integerValue, 0, @"invariant componentBlackLevels >= 0: %@", who);
+  XCTAssertGreaterThan(rawImage.whitePoint, maxLevel.integerValue, @"invariant whitePoint > blackLevel: %@", who);
+  if ([minLevel isEqual:maxLevel]) {
+    XCTAssertEqualObjects(rawImage.blackLevel, minLevel, @"invariant uniform components give blackLevel: %@", who);
+  } else {
+    XCTAssertNil(rawImage.blackLevel, @"invariant differing components give nil blackLevel: %@", who);
+  }
   XCTAssertGreaterThanOrEqual(rawImage.bitsPerSample, 8, @"invariant bitsPerSample >= 8: %@", who);
   XCTAssertLessThanOrEqual(rawImage.bitsPerSample, 16, @"invariant bitsPerSample <= 16: %@", who);
   XCTAssertEqual(rawImage.componentBlackLevels.count, 4u, @"invariant 4 componentBlackLevels: %@", who);

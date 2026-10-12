@@ -44,7 +44,7 @@
   XCTAssertEqual([rawImage colorAtX:0 y:1], RDCFAColorBlue);
   XCTAssertEqual([rawImage colorAtX:1 y:1], RDCFAColorGreen);
 
-  XCTAssertEqual(rawImage.blackLevel, 0);
+  XCTAssertEqualObjects(rawImage.blackLevel, @0);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:0],
     [NSNumber numberWithInt:0],
@@ -105,7 +105,7 @@
   XCTAssertEqual([rawImage colorAtX:0 y:1], RDCFAColorBlue);
   XCTAssertEqual([rawImage colorAtX:1 y:1], RDCFAColorGreen);
 
-  XCTAssertEqual(rawImage.blackLevel, 0);
+  XCTAssertEqualObjects(rawImage.blackLevel, @0);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:0],
     [NSNumber numberWithInt:0],
@@ -165,7 +165,7 @@
   XCTAssertEqual([rawImage colorAtX:0 y:1], RDCFAColorGreen);
   XCTAssertEqual([rawImage colorAtX:1 y:1], RDCFAColorBlue);
 
-  XCTAssertEqual(rawImage.blackLevel, 0);
+  XCTAssertEqualObjects(rawImage.blackLevel, @0);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:0],
     [NSNumber numberWithInt:0],
@@ -226,7 +226,7 @@
   XCTAssertEqual([rawImage colorAtX:0 y:1], RDCFAColorGreen);
   XCTAssertEqual([rawImage colorAtX:1 y:1], RDCFAColorBlue);
 
-  XCTAssertEqual(rawImage.blackLevel, 0);
+  XCTAssertEqualObjects(rawImage.blackLevel, @0);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:0],
     [NSNumber numberWithInt:0],
@@ -286,7 +286,7 @@
   XCTAssertEqual([rawImage colorAtX:0 y:1], RDCFAColorGreen);
   XCTAssertEqual([rawImage colorAtX:1 y:1], RDCFAColorBlue);
 
-  XCTAssertEqual(rawImage.blackLevel, 600);
+  XCTAssertEqualObjects(rawImage.blackLevel, @600);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:600],
     [NSNumber numberWithInt:600],
@@ -347,7 +347,7 @@
   XCTAssertEqual([rawImage colorAtX:0 y:1], RDCFAColorGreen);
   XCTAssertEqual([rawImage colorAtX:1 y:1], RDCFAColorBlue);
 
-  XCTAssertEqual(rawImage.blackLevel, 600);
+  XCTAssertEqualObjects(rawImage.blackLevel, @600);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:600],
     [NSNumber numberWithInt:600],
@@ -407,7 +407,7 @@
   ];
   XCTAssertEqualObjects(expectedExifCFAPattern, rawImage.cfa.exifCFAPattern);
 
-  XCTAssertEqual(rawImage.blackLevel, 400);
+  XCTAssertEqualObjects(rawImage.blackLevel, @400);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:400],
     [NSNumber numberWithInt:400],
@@ -468,7 +468,7 @@
   ];
   XCTAssertEqualObjects(expectedExifCFAPattern, rawImage.cfa.exifCFAPattern);
 
-  XCTAssertEqual(rawImage.blackLevel, 400);
+  XCTAssertEqualObjects(rawImage.blackLevel, @400);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:400],
     [NSNumber numberWithInt:400],
@@ -580,7 +580,7 @@
   ];
   XCTAssertEqualObjects(expectedExifCFAPattern, rawImage.cfa.exifCFAPattern);
 
-  XCTAssertEqual(rawImage.blackLevel, 512);
+  XCTAssertEqualObjects(rawImage.blackLevel, @512);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:512],
     [NSNumber numberWithInt:512],
@@ -641,7 +641,7 @@
   ];
   XCTAssertEqualObjects(expectedExifCFAPattern, rawImage.cfa.exifCFAPattern);
 
-  XCTAssertEqual(rawImage.blackLevel, 512);
+  XCTAssertEqualObjects(rawImage.blackLevel, @512);
   NSArray<NSNumber*> *expectedComponentBlackLevels = @[
     [NSNumber numberWithInt:512],
     [NSNumber numberWithInt:512],
@@ -789,7 +789,7 @@
   XCTAssertEqualObjects(rdRawImage.metadata.cameraModel, libRawImage.metadata.cameraModel);
   XCTAssertEqual(rdRawImage.metadata.whiteBalanceCoefficients.count, 4u);
   XCTAssertEqual(libRawImage.metadata.whiteBalanceCoefficients.count, 4u);
-  XCTAssertEqual(rdRawImage.blackLevel, libRawImage.blackLevel);
+  XCTAssertEqualObjects(rdRawImage.blackLevel, libRawImage.blackLevel);
   XCTAssertEqual(rdRawImage.cropOriginX, libRawImage.cropOriginX);
   XCTAssertEqual(rdRawImage.cropOriginY, libRawImage.cropOriginY);
   XCTAssertEqual(rdRawImage.height, libRawImage.height);
