@@ -27,21 +27,26 @@ if [ "${PLATFORM}" = "macOS" ]; then
   CMAKE_OSX_SYSROOT=macosx
   BINARY_PACKAGE_BUILD=OFF
   ARCHS="arm64;x86_64"
+  DEPLOYMENT_TARGET=14.0
 elif [ "${PLATFORM}" = "iOS" ]; then
   CMAKE_SYSTEM_NAME=iOS
   CMAKE_OSX_SYSROOT=iphoneos
   BINARY_PACKAGE_BUILD=ON
   ARCHS=arm64
+  DEPLOYMENT_TARGET=17.5
 elif [ "${PLATFORM}" = "iOS_Simulator" ]; then
   CMAKE_SYSTEM_NAME=iOS
   CMAKE_OSX_SYSROOT=iphonesimulator
   BINARY_PACKAGE_BUILD=ON
   ARCHS="arm64;x86_64"
+  DEPLOYMENT_TARGET=17.5
 else
   echo "Invalid platform: ${PLATFORM}"
   exit 1
 fi
 
+# DEPLOYMENT_TARGET is the minimum OS version the vendor libraries support. It must not be
+# newer than the framework's own deployment target. Override in env-${PLATFORM}.sh
 . "${BASE_DIR}/include.sh"
 
 if [ ! -d "${SOURCE_DIR}" ]; then

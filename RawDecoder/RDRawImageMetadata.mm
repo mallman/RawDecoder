@@ -22,12 +22,18 @@
     _canonicalCameraAlias = [NSString stringWithUTF8String:metadata.canonical_alias.data()];
     _iso = metadata.isoSpeed;
     _pixelAspectRatio = metadata.pixelAspectRatio;
-    _whiteBalanceCoefficients = @[
-      [NSNumber numberWithFloat: metadata.wbCoeffs[0]],
-      [NSNumber numberWithFloat: metadata.wbCoeffs[1]],
-      [NSNumber numberWithFloat: metadata.wbCoeffs[2]],
-      [NSNumber numberWithFloat: metadata.wbCoeffs[3]]
-    ];
+    // RawSpeed reports white balance as an Optional; absent means the file had none
+    if (metadata.wbCoeffs) {
+      const std::array<float, 4> &wbCoeffs = *metadata.wbCoeffs;
+      _whiteBalanceCoefficients = @[
+        [NSNumber numberWithFloat: wbCoeffs[0]],
+        [NSNumber numberWithFloat: wbCoeffs[1]],
+        [NSNumber numberWithFloat: wbCoeffs[2]],
+        [NSNumber numberWithFloat: wbCoeffs[3]]
+      ];
+    } else {
+      _whiteBalanceCoefficients = nil;
+    }
   }
   return self;
 }
@@ -48,7 +54,9 @@
     _canonicalCameraAlias = [NSString stringWithUTF8String:librawData->idata.normalized_model];
     _iso = (NSInteger)floor(librawData->other.iso_speed);
     _pixelAspectRatio = librawData->sizes.pixel_aspect;
-    _whiteBalanceCoefficients = @[
+    // LibRaw's own post-processing treats cam_mul[0] <= 0.00001 as "no as-shot white
+    // balance parsed from the file" (postprocessing_utils_dcrdefs.cpp); use the same rule
+    _whiteBalanceCoefficients = librawData->color.cam_mul[0] <= 0.00001f ? nil : @[
       [NSNumber numberWithFloat: librawData->color.cam_mul[0]],
       [NSNumber numberWithFloat: librawData->color.cam_mul[1]],
       [NSNumber numberWithFloat: librawData->color.cam_mul[2]],

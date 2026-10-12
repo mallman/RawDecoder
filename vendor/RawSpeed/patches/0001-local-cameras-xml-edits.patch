@@ -1,0 +1,120 @@
+--- a/data/cameras.xml
++++ b/data/cameras.xml
+@@ -5536,7 +5536,7 @@
+ 			<Color x="0" y="1">GREEN</Color>
+ 			<Color x="1" y="1">BLUE</Color>
+ 		</CFA>
+-		<Crop x="0" y="0" width="0" height="0"/>
++		<Crop x="16" y="8" width="8256" height="5504"/>
+ 		<Sensor black="100" white="3880"/>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -5554,7 +5554,7 @@
+ 			<Color x="0" y="1">GREEN</Color>
+ 			<Color x="1" y="1">BLUE</Color>
+ 		</CFA>
+-		<Crop x="0" y="0" width="0" height="0"/>
++		<Crop x="16" y="8" width="8256" height="5504"/>
+ 		<Sensor black="100" white="3880"/>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -5572,7 +5572,7 @@
+ 			<Color x="0" y="1">GREEN</Color>
+ 			<Color x="1" y="1">BLUE</Color>
+ 		</CFA>
+-		<Crop x="0" y="0" width="0" height="0"/>
++		<Crop x="16" y="8" width="8256" height="5504"/>
+ 		<Sensor black="400" white="15520"/>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -5590,7 +5590,7 @@
+ 			<Color x="0" y="1">GREEN</Color>
+ 			<Color x="1" y="1">BLUE</Color>
+ 		</CFA>
+-		<Crop x="0" y="0" width="0" height="0"/>
++		<Crop x="16" y="8" width="8256" height="5504"/>
+ 		<Sensor black="400" white="15520"/>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -11467,6 +11467,7 @@
+ 	</Camera>
+ 	<Camera make="Panasonic" model="DC-G9">
+ 		<ID make="Panasonic" model="DC-G9">Panasonic DC-G9</ID>
++		<Crop x="0" y="0" width="-58" height="0"/>
+ 		<Sensor black="148" white="4095"/>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -11478,6 +11479,7 @@
+ 	</Camera>
+ 	<Camera make="Panasonic" model="DC-G9" mode="4:3">
+ 		<ID make="Panasonic" model="DC-G9">Panasonic DC-G9</ID>
++		<Crop x="0" y="0" width="-58" height="0"/>
+ 		<Sensor black="148" white="4095"/>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -11771,14 +11773,7 @@
+ 		<Sensor black="142" white="4095"/>
+ 		<Aliases>
+ 			<Alias>DC-TZ200</Alias>
+-			<Alias>DC-TZ200D</Alias>
+-			<Alias>DC-TZ202D</Alias>
+-			<Alias>DC-TZ220</Alias>
+-			<Alias>DC-TZ220D</Alias>
+ 			<Alias>DC-ZS200</Alias>
+-			<Alias>DC-ZS200D</Alias>
+-			<Alias>DC-ZS220</Alias>
+-			<Alias>DC-ZS220D</Alias>
+ 		</Aliases>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -13917,7 +13912,7 @@
+ 			<Color x="0" y="1">GREEN</Color>
+ 			<Color x="1" y="1">BLUE</Color>
+ 		</CFA>
+-		<Crop x="0" y="0" width="-8" height="0"/>
++		<Crop x="12" y="12" width="8640" height="5760"/>
+ 		<Sensor black="512" white="16383"/>
+ 		<ColorMatrices>
+ 			<ColorMatrix planes="3">
+@@ -18464,16 +18459,16 @@
+ 	<Camera make="SAMSUNG DIGITAL IMA" model="SAMSUNG GX20" mode="dng">
+ 		<ID make="Samsung" model="GX20">Samsung GX20</ID>
+ 	</Camera>
+-	<Camera make="samsung" model="SM-G920F" mode="dng">
++	<Camera make="samsung" model="SM-G920F" supported="no-samples">
+ 		<ID make="Samsung" model="G920F">Samsung G920F</ID>
+ 	</Camera>
+-	<Camera make="samsung" model="SM-G935F" mode="dng">
++	<Camera make="samsung" model="SM-G935F" supported="no-samples">
+ 		<ID make="Samsung" model="G935F">Samsung G935F</ID>
+ 	</Camera>
+-	<Camera make="SAMSUNG TECHWIN Co." model="SAMSUNG GX10" mode="dng">
++	<Camera make="SAMSUNG TECHWIN Co." model="SAMSUNG GX10" supported="no-samples">
+ 		<ID make="Samsung" model="GX10">Samsung GX10</ID>
+ 	</Camera>
+-	<Camera make="SAMSUNG TECHWIN Co." model="SAMSUNG GX20" mode="dng">
++	<Camera make="SAMSUNG TECHWIN Co." model="SAMSUNG GX20" supported="no-samples">
+ 		<ID make="Samsung" model="GX20">Samsung GX20</ID>
+ 	</Camera>
+ 	<Camera make="Nokia" model="Lumia 1020" mode="dng">
+--- a/data/cameras.xsd
++++ b/data/cameras.xsd
+@@ -203,16 +203,10 @@
+   <xs:simpleType name="CropTypeSizeOrNegOffset">
+     <xs:union>
+       <xs:simpleType>
+-        <xs:restriction base="xs:unsignedShort">
+-          <xs:minInclusive value="1296"/>
+-          <xs:maxInclusive value="6080"/>
+-        </xs:restriction>
++        <xs:restriction base="xs:unsignedShort"/>
+       </xs:simpleType>
+       <xs:simpleType>
+-        <xs:restriction base="xs:short">
+-          <xs:minInclusive value="-938"/>
+-          <xs:maxInclusive value="0"/>
+-        </xs:restriction>
++        <xs:restriction base="xs:short"/>
+       </xs:simpleType>
+     </xs:union>
+   </xs:simpleType>

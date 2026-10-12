@@ -598,6 +598,21 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   XCTAssertGreaterThan(rawImage.whitePoint, rawImage.blackLevel);
 }
 
+/// This CRW records no as-shot white balance. Both decoders must say so with nil
+- (void)testCanonS3ISCRWHasNoWhiteBalance {
+  NSString *path = @"Canon/Poweshot S3IS/RAW_CANON_S3IS.CRW";
+  id<RDRawImage> libRawImage = [RawDecoderTestUtils rawImageAtPixlsFilePath:path
+                                                                withDecoder:[RDLibRawDecoder self]];
+  id<RDRawImage> rawSpeedImage = [RawDecoderTestUtils rawImageAtPixlsFilePath:path
+                                                                  withDecoder:[RDRawSpeedDecoder self]];
+  if (libRawImage == nil || rawSpeedImage == nil) {
+    return;
+  }
+
+  XCTAssertNil(libRawImage.metadata.whiteBalanceCoefficients);
+  XCTAssertNil(rawSpeedImage.metadata.whiteBalanceCoefficients);
+}
+
 /// CIFF-based CRW files carry no TIFF Make/Model tags. LibRaw can only offer its rewritten
 /// strings, so the LibRaw decoder returns nil; RawSpeed reads CIFF's own make/model record.
 /// The canonical fields agree regardless

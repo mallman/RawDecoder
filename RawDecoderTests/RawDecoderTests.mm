@@ -787,6 +787,8 @@
   XCTAssertEqual(rdRawImage.bitsPerSample, libRawImage.bitsPerSample);
   XCTAssertEqualObjects(rdRawImage.metadata.cameraMake, libRawImage.metadata.cameraMake);
   XCTAssertEqualObjects(rdRawImage.metadata.cameraModel, libRawImage.metadata.cameraModel);
+  XCTAssertEqual(rdRawImage.metadata.whiteBalanceCoefficients.count, 4u);
+  XCTAssertEqual(libRawImage.metadata.whiteBalanceCoefficients.count, 4u);
   XCTAssertEqual(rdRawImage.blackLevel, libRawImage.blackLevel);
   XCTAssertEqual(rdRawImage.cropOriginX, libRawImage.cropOriginX);
   XCTAssertEqual(rdRawImage.cropOriginY, libRawImage.cropOriginY);

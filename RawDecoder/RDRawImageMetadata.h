@@ -24,7 +24,13 @@ __attribute__((objc_subclassing_restricted))
 @property (readonly) NSString *canonicalCameraAlias;
 @property (readonly) NSInteger iso;
 @property (readonly) double pixelAspectRatio;
-@property (readonly) NSArray<NSNumber*> *whiteBalanceCoefficients;
+/// The as-shot white balance multipliers, four values in CFA color order. nil when the
+/// decoder found no as-shot white balance in the file. Each decoder decides this for itself,
+/// so for the same file one decoder can return nil while the other returns values.
+/// Values are as the file stores them and are not normalized: they may be scaled so green
+/// is 1, or be the camera's integer multipliers. Compare ratios to green, not raw values.
+/// The fourth value is 0 or a second green depending on decoder and file
+@property (readonly, nullable) NSArray<NSNumber*> *whiteBalanceCoefficients;
 - (instancetype)init NS_UNAVAILABLE;
 @end
 
