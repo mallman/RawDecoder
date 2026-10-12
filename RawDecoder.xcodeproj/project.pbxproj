@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		4E0302D12A8D457F002D2B59 /* RDLibRawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E0302D22A8D457F002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
-		4EC0FFEE2BD10001001A0011 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
-		4EC0FFEE2BD10001001A0012 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
-		4EC0FFEE2BD10001001A0013 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
 		4E0302D52A8D458F002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
 		4E0302D62A8D4591002D2B59 /* RDLibRawDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */; };
 		4E0302D72A8D4595002D2B59 /* RDLibRawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -34,6 +31,9 @@
 		4E25B71D2A89C2AE00E6E7DB /* libpugixml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E25B71C2A89C29E00E6E7DB /* libpugixml.a */; };
 		4E578A0F2A897D60002F7CE4 /* RawDecoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E578A062A897D5F002F7CE4 /* RawDecoder.framework */; };
 		4E578A152A897D60002F7CE4 /* RawDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E578A092A897D5F002F7CE4 /* RawDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4EC0FFEE2BD10001001A0011 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
+		4EC0FFEE2BD10001001A0012 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
+		4EC0FFEE2BD10001001A0013 /* LibRawExifCapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */; };
 		4EE929712A89B0CB0048D918 /* RDCFAColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EE929722A89B0CB0048D918 /* RDCFA.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EE929602A89B0CB0048D918 /* RDCFA.mm */; };
 		4EE929732A89B0CB0048D918 /* RDErrorDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EE929612A89B0CB0048D918 /* RDErrorDomain.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -112,8 +112,6 @@
 /* Begin PBXFileReference section */
 		4E0302CF2A8D457F002D2B59 /* RDLibRawDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDLibRawDecoder.h; sourceTree = "<group>"; };
 		4E0302D02A8D457F002D2B59 /* RDLibRawDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RDLibRawDecoder.m; sourceTree = "<group>"; };
-		4EC0FFEE2BD10001001A0001 /* LibRawExifCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibRawExifCapture.h; sourceTree = "<group>"; };
-		4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LibRawExifCapture.mm; sourceTree = "<group>"; };
 		4E0302DC2A8D4E68002D2B59 /* RDErrorDomain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RDErrorDomain.m; sourceTree = "<group>"; };
 		4E0302E02A8D4FC7002D2B59 /* RDRawSpeedDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDRawSpeedDecoder.h; sourceTree = "<group>"; };
 		4E0302E12A8D4FC7002D2B59 /* RDRawSpeedDecoder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RDRawSpeedDecoder.mm; sourceTree = "<group>"; };
@@ -126,10 +124,12 @@
 		4E578A0E2A897D60002F7CE4 /* RawDecoderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RawDecoderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E7CDBCF2AB0B71D00C8119E /* RawDecoder.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RawDecoder.xctestplan; sourceTree = "<group>"; };
 		4EACA35B2A8C0AE4004B74B2 /* raw-pixls-us-data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "raw-pixls-us-data"; sourceTree = "<group>"; };
+		4EC0FFEE2BD10001001A0001 /* LibRawExifCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibRawExifCapture.h; sourceTree = "<group>"; };
+		4EC0FFEE2BD10001001A0002 /* LibRawExifCapture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LibRawExifCapture.mm; sourceTree = "<group>"; };
+		4EC0FFEE2BD10001001A0021 /* RDError+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RDError+Private.h"; sourceTree = "<group>"; };
 		4EE9295F2A89B0CB0048D918 /* RDCFAColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDCFAColor.h; sourceTree = "<group>"; };
 		4EE929602A89B0CB0048D918 /* RDCFA.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RDCFA.mm; sourceTree = "<group>"; };
 		4EE929612A89B0CB0048D918 /* RDErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDErrorDomain.h; sourceTree = "<group>"; };
-		4EC0FFEE2BD10001001A0021 /* RDError+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RDError+Private.h"; sourceTree = "<group>"; };
 		4EE929622A89B0CB0048D918 /* RDRawImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDRawImageMetadata.h; sourceTree = "<group>"; };
 		4EE929632A89B0CB0048D918 /* RDRawImageMetadata.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RDRawImageMetadata.mm; sourceTree = "<group>"; };
 		4EE929652A89B0CB0048D918 /* RawSpeedRawImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RawSpeedRawImage.h; sourceTree = "<group>"; };
@@ -812,6 +812,7 @@
 					"$(PROJECT_DIR)/vendor/LibRaw/build-macOS",
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-macOS/src/librawspeed/common",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
@@ -834,12 +835,14 @@
 					"$(PROJECT_DIR)/vendor/LibRaw/build-macOS",
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-macOS/src/librawspeed/common",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 			};
 			name = Release;
 		};
 		4E578A1C2A897D60002F7CE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -848,6 +851,7 @@
 		4E578A1D2A897D60002F7CE4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -862,7 +866,7 @@
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-iOS/src",
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-iOS/src/external/llvm-openmp/build/runtime/src",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendor/LibRaw/build-iOS",
@@ -889,7 +893,7 @@
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-iOS/src",
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-iOS/src/external/llvm-openmp/build/runtime/src",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendor/LibRaw/build-iOS",
@@ -915,7 +919,7 @@
 					"$(PROJECT_DIR)/vendor/RawSpeed/RawSpeed/src/external",
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-iOS_Simulator/src",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendor/LibRaw/build-iOS_Simulator",
@@ -940,7 +944,7 @@
 					"$(PROJECT_DIR)/vendor/RawSpeed/RawSpeed/src/external",
 					"$(PROJECT_DIR)/vendor/RawSpeed/build-iOS_Simulator/src",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendor/LibRaw/build-iOS_Simulator",
