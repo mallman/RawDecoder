@@ -687,8 +687,61 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
       NSLog(@"Progress: %lu%%", i * 100 / rawPixlsFormatPaths.count);
     }
     NSString *path = rawPixlsFormatPaths[i];
-    [RawDecoderTestUtils rawImageAtPixlsFilePath:path
-                                     withDecoder:decoder];
+    id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageAtPixlsFilePath:path
+                                                                withDecoder:decoder];
+    if (rawImage != nil) {
+      [self checkInvariantsOfRawImage:rawImage path:path decoder:decoder];
+    }
+  }
+}
+
+/// Properties every decoded image must satisfy regardless of camera or decoder. Each failure
+/// message starts with "invariant" and names the decoder and file, so a dataset run can be
+/// filtered to them
++ (void)checkInvariantsOfRawImage:(id<RDRawImage>)rawImage
+                             path:(NSString *)path
+                          decoder:(id<RDRawImageDecoder>)decoder {
+  NSString *who = [NSString stringWithFormat:@"%@ %@", NSStringFromClass((Class)decoder), path];
+
+  // Geometry: the crop lies inside the uncropped image (review B1)
+  XCTAssertGreaterThan(rawImage.width, 0, @"invariant width > 0: %@", who);
+  XCTAssertGreaterThan(rawImage.height, 0, @"invariant height > 0: %@", who);
+  XCTAssertGreaterThanOrEqual(rawImage.cropOriginX, 0, @"invariant cropOriginX >= 0: %@", who);
+  XCTAssertGreaterThanOrEqual(rawImage.cropOriginY, 0, @"invariant cropOriginY >= 0: %@", who);
+  XCTAssertLessThanOrEqual(rawImage.cropOriginX + rawImage.width, rawImage.uncroppedWidth,
+                           @"invariant crop within uncropped width: %@", who);
+  XCTAssertLessThanOrEqual(rawImage.cropOriginY + rawImage.height, rawImage.uncroppedHeight,
+                           @"invariant crop within uncropped height: %@", who);
+
+  // Pixel format: 16-bit, one component, rows at least one row of pixels wide (review A8)
+  XCTAssertEqual(rawImage.bytesPerPixel, 2, @"invariant bytesPerPixel == 2: %@", who);
+  XCTAssertEqual(rawImage.componentsPerPixel, 1, @"invariant componentsPerPixel == 1: %@", who);
+  XCTAssertGreaterThanOrEqual(rawImage.bytesPerRow, rawImage.uncroppedWidth * rawImage.bytesPerPixel,
+                              @"invariant bytesPerRow >= row of pixels: %@", who);
+
+  // Levels: a usable range between black and white (review B2)
+  XCTAssertGreaterThanOrEqual(rawImage.blackLevel, 0, @"invariant blackLevel >= 0: %@", who);
+  XCTAssertGreaterThan(rawImage.whitePoint, rawImage.blackLevel, @"invariant whitePoint > blackLevel: %@", who);
+  XCTAssertGreaterThanOrEqual(rawImage.bitsPerSample, 8, @"invariant bitsPerSample >= 8: %@", who);
+  XCTAssertLessThanOrEqual(rawImage.bitsPerSample, 16, @"invariant bitsPerSample <= 16: %@", who);
+  XCTAssertEqual(rawImage.componentBlackLevels.count, 4u, @"invariant 4 componentBlackLevels: %@", who);
+
+  // CFA: the image's per-pixel color agrees with its declared pattern (review B3). A 16x16
+  // window covers Bayer (2x2), X-Trans (6x6) and LibRaw's 16x16 Leaf/Kodak table
+  RDCFA *cfa = rawImage.cfa;
+  XCTAssertEqual((NSUInteger)(cfa.width * cfa.height), cfa.exifCFAPattern.count,
+                 @"invariant CFA size matches exifCFAPattern: %@", who);
+  if (cfa.width > 0 && cfa.height > 0) {
+    NSInteger mismatches = 0;
+    for (NSInteger y = 0; y < MIN(16, rawImage.height); y++) {
+      for (NSInteger x = 0; x < MIN(16, rawImage.width); x++) {
+        if ([rawImage colorAtX:x y:y] != [cfa colorAtX:x % cfa.width y:y % cfa.height]) {
+          mismatches++;
+        }
+      }
+    }
+    XCTAssertEqual(mismatches, 0, @"invariant colorAtX:y: agrees with cfa (%ldx%ld): %@",
+                   (long)cfa.width, (long)cfa.height, who);
   }
 }
 
