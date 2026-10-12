@@ -154,9 +154,12 @@ static unsigned positiveMod(NSInteger v, unsigned period) {
                                                      exifModel:exifModel];
     // linear_max is the white level from the file's own metadata, and LibRaw sets it to 0
     // when the file has none (many RAF, SRW and SR2 files, and DNGs whose opcodes LibRaw
-    // applies). Fall back to maximum, LibRaw's per-camera or data-derived ceiling
+    // applies). It can also be present but nonsensical: LibRaw 0.22.2 reads 153 for the Canon
+    // EOS R50 V, below its black level of 511. In either case fall back to maximum, LibRaw's
+    // per-camera or data-derived ceiling
+    NSInteger highestBlack = [[componentBlackLevels valueForKeyPath:@"@max.self"] integerValue];
     whitePoint = librawData->color.linear_max[0];
-    if (whitePoint <= 0) {
+    if (whitePoint <= highestBlack) {
       whitePoint = librawData->color.maximum;
     }
     bitsPerSample = whitePoint > 0 ? (uint16_t)ceil(log2(whitePoint)) : 0;

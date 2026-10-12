@@ -681,6 +681,21 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   XCTAssertGreaterThan(rawImage.whitePoint, 514);
 }
 
+/// LibRaw 0.22.2 reads a linear_max of 153 for this body, below its black level of 511, so the
+/// white point must come from the fallback (LibRaw's maximum, 16383)
+- (void)testCanonR50VWhitePointWithLibRaw {
+  id<RDRawImage> rawImage = [RawDecoderTestUtils
+                             rawImageAtPixlsFilePath:@"Canon/Canon EOS R50 V/IMG_0034.CR3"
+                             withDecoder:[RDLibRawDecoder self]];
+  if (rawImage == nil) {
+    return;
+  }
+
+  XCTAssertEqualObjects(rawImage.blackLevel, @511);
+  XCTAssertEqual(rawImage.whitePoint, 16383);
+  XCTAssertEqual(rawImage.bitsPerSample, 14);
+}
+
 /// This CRW records no as-shot white balance. Both decoders must say so with nil
 - (void)testCanonS3ISCRWHasNoWhiteBalance {
   NSString *path = @"Canon/Poweshot S3IS/RAW_CANON_S3IS.CRW";
