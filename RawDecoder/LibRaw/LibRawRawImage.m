@@ -79,6 +79,14 @@ static unsigned positiveMod(NSInteger v, unsigned period) {
       RDSetError(error, RDErrorCodeUnsupportedCFA, @"Raw file has unknown or unsupported CFA", nil);
       return nil;
     }
+    // Fujifilm SuperCCD sensors are stored rotated 45 degrees; LibRaw colors them with FCF() and
+    // un-rotates them only during post-processing, which this framework does not use. Their raw
+    // buffer is not a rectangular CFA image (review B12). RawSpeed decodes these files
+    if (librawData->rawdata.ioparams.fuji_width != 0) {
+      RDSetError(error, RDErrorCodeUnsupportedCFA,
+                 @"Fujifilm SuperCCD sensor layout is not supported by the LibRaw decoder", nil);
+      return nil;
+    }
     _librawData = librawData;
     const libraw_image_sizes_t *sizes = &librawData->sizes;
 
@@ -121,18 +129,49 @@ static unsigned positiveMod(NSInteger v, unsigned period) {
     bytesPerRow = sizes->raw_pitch;
     imageData = &librawData->rawdata.raw_image[cropOriginX + cropOriginY * bytesPerRow / 2];
 
-    // CFA and black levels at the 2x2 tile at the crop origin, in LibRaw's visible frame (B4).
-    // LibRaw's black level for a pixel is black + cblack[color] + the pattern entry
-    // cblack[6 + (row % cblack[4]) * cblack[5] + (col % cblack[5])] when a pattern is present
+    // The CFA pattern starting at the crop origin, in LibRaw's visible frame (B4), sized to the
+    // pattern's real period (review B3): 6x6 for X-Trans (filters == 9), 16x16 for LibRaw's
+    // Leaf/Kodak table (filters == 1), and for Bayer 2 columns by 2 rows, or 8 rows when the
+    // 8-row pattern encoded in filters does not repeat every 2 rows
+    NSInteger cfaWidth = 2, cfaHeight = 2;
+    if (librawData->idata.filters == 9) {
+      cfaWidth = 6; cfaHeight = 6;
+    } else if (librawData->idata.filters == 1) {
+      cfaWidth = 16; cfaHeight = 16;
+    } else {
+      for (int row = 2; row < 8 && cfaHeight == 2; row++) {
+        for (int col = 0; col < 2; col++) {
+          if (libraw_COLOR(librawData, row, col) != libraw_COLOR(librawData, row % 2, col)) {
+            cfaHeight = 8;
+            break;
+          }
+        }
+      }
+    }
+    RDCFAColor *cfaColors = (RDCFAColor *)malloc(sizeof(RDCFAColor) * (size_t)(cfaWidth * cfaHeight));
+    for (NSInteger y = 0; y < cfaHeight; y++) {
+      for (NSInteger x = 0; x < cfaWidth; x++) {
+        cfaColors[x + y * cfaWidth] = libRawImageColorWithLibrawDataAt(librawData,
+                                                                       librawVisibleCoordinate(x, _visibleOffsetX),
+                                                                       librawVisibleCoordinate(y, _visibleOffsetY));
+      }
+    }
+    cfa = [[RDCFA alloc] initWithCFAColors:cfaColors
+                                     width:cfaWidth
+                                    height:cfaHeight];
+    free(cfaColors);
+
+    // Black levels at the 2x2 tile at the crop origin, also in the visible frame. LibRaw's black
+    // level for a pixel is black + cblack[color] + the pattern entry
+    // cblack[6 + (row % cblack[4]) * cblack[5] + (col % cblack[5])] when a pattern is present.
+    // Every X-Trans file in the dataset has a uniform black level, so four values suffice
     const unsigned *cblack = librawData->color.cblack;
     const unsigned patternRows = cblack[4], patternCols = cblack[5];
-    RDCFAColor cfaColors[4];
     NSMutableArray<NSNumber *> *levels = [NSMutableArray arrayWithCapacity:4];
     for (NSInteger y = 0; y < 2; y++) {
       for (NSInteger x = 0; x < 2; x++) {
         long visibleCol = librawVisibleCoordinate(x, _visibleOffsetX);
         long visibleRow = librawVisibleCoordinate(y, _visibleOffsetY);
-        cfaColors[x + y * 2] = libRawImageColorWithLibrawDataAt(librawData, visibleCol, visibleRow);
         int color = libraw_COLOR(librawData, (int)visibleRow, (int)visibleCol);
         unsigned level = librawData->color.black + (color >= 0 && color < 4 ? cblack[color] : 0);
         if (patternRows > 0 && patternCols > 0) {
@@ -142,9 +181,6 @@ static unsigned positiveMod(NSInteger v, unsigned period) {
         [levels addObject:@(level)];
       }
     }
-    cfa = [[RDCFA alloc] initWithCFAColors:cfaColors
-                                     width:2
-                                    height:2];
     componentBlackLevels = levels;
     blackLevel = [[NSSet setWithArray:levels] count] == 1 ? levels[0] : nil;
     // We'll assume 1

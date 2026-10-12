@@ -44,6 +44,8 @@ static NSSet<NSString *> *knownFailingFiles = [NSSet setWithArray: @[
   @"Canon/EOS-1D X Mark II/AZ1I2271.CR2",
   @"Canon/EOS-1D X Mark II/AZ1I2272.CR2",
 
+  @"Fujifilm/DBP for GX680/DSCF0010.RAF",
+
   @"Leica/M Monochrom (Typ 246)/M2462362.DNG",
   @"Leica/M Monochrom/L1000622.DNG",
 
@@ -108,6 +110,22 @@ static NSSet<NSString *> *knownFailingFiles = [NSSet setWithArray: @[
 ]];
 
 static NSSet<NSString *> *knownFailingLibRawFiles = [NSSet setWithArray: @[
+  @"Fujifilm/FinePix E550/RAW_FUJI_E550.RAF",
+  @"Fujifilm/FinePix E900/RAW_FUJI_E900.RAF",
+  @"Fujifilm/FinePix F700/RAW_FUJI_F700.RAF",
+  @"Fujifilm/FinePix S100FS/DSCF8410.RAF",
+  @"Fujifilm/FinePix S2Pro/DSCF0002.RAF",
+  @"Fujifilm/FinePix S3Pro/DSCF3694.RAF",
+  @"Fujifilm/FinePix S5000/2007_0912Image0022.RAF",
+  @"Fujifilm/FinePix S5200/DSCF1523.RAF",
+  @"Fujifilm/FinePix S5600/RAW_FUJI_S5600S5200.RAF",
+  @"Fujifilm/FinePix S5Pro/2018_06150003.RAF",
+  @"Fujifilm/FinePix S6000fd/DSCF1973.RAF",
+  @"Fujifilm/FinePix S6500fd/DSCF1333.RAF",
+  @"Fujifilm/FinePix S7000/dscf3648.raf",
+  @"Fujifilm/FinePix S9500/20170430_0041.RAF",
+  @"Fujifilm/FinePix S9600/2007-11-10--16-32-45-original.raf",
+
   @"Nikon/E5700/20080115-DSCN1758.NEF",
 
   @"Panasonic/DC-S1RM2/P1000450.RW2",
@@ -122,7 +140,6 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   @"DJI/FC4382/DJI_20250506184749_0011_D.DNG",
   @"DJI/FC9287/DJI_20250528104510_0025_D.DNG",
 
-  @"Fujifilm/DBP for GX680/DSCF0010.RAF",
   @"Fujifilm/GFX100 II/_DSF0265.RAF",
   @"Fujifilm/GFX100 II/_DSF0266.RAF",
   @"FUJIFILM/GFX100RF/DSCF0076.RAF",
@@ -679,6 +696,47 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   NSArray<NSNumber *> *expectedComponentBlackLevels = @[@511, @514, @512, @513];
   XCTAssertEqualObjects(rawImage.componentBlackLevels, expectedComponentBlackLevels);
   XCTAssertGreaterThan(rawImage.whitePoint, 514);
+}
+
+/// For every X-Trans RAF both decoders read, the CFA color at each sensor position agrees.
+/// The decoders crop differently, so compare at uncropped coordinates over a 12x12 window
+/// inside both crops. This checks LibRaw's 6x6 pattern and its alignment against RawSpeed's
+- (void)testXTransCFAMatchesRawSpeed {
+  NSString *root = [RawDecoderTestUtils rawPixlsDataPath];
+  NSArray<NSString *> *paths = [[[NSFileManager defaultManager] subpathsOfDirectoryAtPath:root error:NULL]
+                                sortedArrayUsingSelector:@selector(compare:)];
+  NSInteger compared = 0;
+  for (NSString *path in paths) {
+    if (![path.pathExtension.lowercaseString isEqualToString:@"raf"]) {
+      continue;
+    }
+    NSURL *url = [NSURL fileURLWithPath:[root stringByAppendingPathComponent:path]];
+    id<RDRawImage> libRaw = [RDLibRawDecoder decodeRawImageFromFileURL:url error:NULL];
+    if (libRaw == nil || libRaw.cfa.width != 6) {
+      continue;
+    }
+    id<RDRawImage> rawSpeed = [RDRawSpeedDecoder decodeRawImageFromFileURL:url error:NULL];
+    if (rawSpeed == nil) {
+      continue;
+    }
+    XCTAssertEqual(rawSpeed.cfa.width, 6, @"RawSpeed CFA width: %@", path);
+    NSInteger originX = MAX(libRaw.cropOriginX, rawSpeed.cropOriginX);
+    NSInteger originY = MAX(libRaw.cropOriginY, rawSpeed.cropOriginY);
+    NSInteger mismatches = 0;
+    for (NSInteger y = originY; y < originY + 12; y++) {
+      for (NSInteger x = originX; x < originX + 12; x++) {
+        if ([libRaw colorAtX:x - libRaw.cropOriginX y:y - libRaw.cropOriginY] !=
+            [rawSpeed colorAtX:x - rawSpeed.cropOriginX y:y - rawSpeed.cropOriginY]) {
+          mismatches++;
+        }
+      }
+    }
+    XCTAssertEqual(mismatches, 0, @"X-Trans CFA differs between decoders at %ld of 144 positions: %@",
+                   (long)mismatches, path);
+    compared++;
+  }
+  NSLog(@"X-Trans files compared across decoders: %ld", (long)compared);
+  XCTAssertGreaterThan(compared, 0);
 }
 
 /// LibRaw 0.22.2 reads a linear_max of 153 for this body, below its black level of 511, so the

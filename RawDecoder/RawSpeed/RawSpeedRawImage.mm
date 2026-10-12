@@ -52,11 +52,20 @@
         RDSetError(error, RDErrorCodeNoCFA, @"Raw image has no color filter array", nil);
         return nil;
       }
-      _colorFilterArray = rawImageData->cfa;
-      cfa = [[RDCFA alloc] initWithCFA:_colorFilterArray];
       componentsPerPixel = rawImage->getCpp();
       cropOriginX = croppedImageArray.offsetCols;
       cropOriginY = croppedImageArray.offsetRows;
+      // RawSpeed shifts the CFA to the crop origin when it crops (RawImageData::subFrame), except
+      // for X-Trans (dcraw filter 9) and the 16x16 Leaf pattern (filter 1), which it leaves
+      // relative to the uncropped sensor; its consumers apply the crop offset themselves. Do the
+      // same shift here so cfa and colorAtX:y: are relative to the crop origin like imageData
+      _colorFilterArray = rawImageData->cfa;
+      uint32_t dcrawFilter = _colorFilterArray.getDcrawFilter();
+      if (dcrawFilter == 1 || dcrawFilter == 9) {
+        _colorFilterArray.shiftRight((int)cropOriginX);
+        _colorFilterArray.shiftDown((int)cropOriginY);
+      }
+      cfa = [[RDCFA alloc] initWithCFA:_colorFilterArray];
       bitsPerSample = (uint16_t)ceil(log2(*rawImage->whitePoint));
       if (!rawImageData->blackLevelSeparate) {
         rawImageData->calculateBlackAreas();
