@@ -6,7 +6,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// A raw image decoder. This decodes raw image data or a raw image file to an `RDRawImage`
 @protocol RDRawImageDecoder
-/// Decodes raw image data
+/// Decodes raw image data.
+///
+/// The decoder reads `data` only while this method runs; the returned image owns copies of
+/// everything it needs. The caller may modify or release `data` as soon as the method returns.
+/// `data` must not be modified while the method is running.
 + (id<RDRawImage> _Nullable)decodeRawImageFromData:(NSData *)data
                                              error:(NSError * _Nullable *)error;
 

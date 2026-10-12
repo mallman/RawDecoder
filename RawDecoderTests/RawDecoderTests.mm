@@ -740,6 +740,33 @@
   XCTAssertGreaterThan(error.localizedDescription.length, 0u);
 }
 
+/// The documented contract: a decoded image does not depend on the caller's NSData after the
+/// call returns. Overwrite the input completely, then compare with a decode of the same file
+- (void) testDecodedImageDoesNotDependOnInputData {
+  NSURL *url = [RawDecoderTestUtils urlForResource:@"Nikon D850 Raw Image 1" withExtension:@"NEF"];
+  for (Class decoder in @[[RDLibRawDecoder class], [RDRawSpeedDecoder class]]) {
+    NSMutableData *data = [NSMutableData dataWithContentsOfURL:url];
+    id<RDRawImage> fromData = [(id<RDRawImageDecoder>)decoder decodeRawImageFromData:data error:NULL];
+    XCTAssertNotNil(fromData, @"%@", decoder);
+    memset(data.mutableBytes, 0xA5, data.length);
+    data = nil;
+    id<RDRawImage> fromURL = [(id<RDRawImageDecoder>)decoder decodeRawImageFromFileURL:url error:NULL];
+    XCTAssertEqual(fromData.uncroppedHeight, fromURL.uncroppedHeight, @"%@", decoder);
+    XCTAssertEqual(fromData.bytesPerRow, fromURL.bytesPerRow, @"%@", decoder);
+    const size_t rowBytes = (size_t)(fromURL.uncroppedWidth * fromURL.bytesPerPixel);
+    const size_t pitch = (size_t)fromURL.bytesPerRow;
+    NSInteger mismatchedRows = 0;
+    for (NSInteger row = 0; row < fromURL.uncroppedHeight; row++) {
+      if (memcmp((const uint8_t *)fromData.uncroppedImageData + row * pitch,
+                 (const uint8_t *)fromURL.uncroppedImageData + row * pitch, rowBytes) != 0) {
+        mismatchedRows++;
+      }
+    }
+    XCTAssertEqual(mismatchedRows, 0, @"%@", decoder);
+    XCTAssertEqualObjects(fromData.metadata.cameraModel, fromURL.metadata.cameraModel, @"%@", decoder);
+  }
+}
+
 + (void) checkDecodeDataVersusURLForResource:(NSString *)resource
                                withExtension:(NSString *)extension
                                      decoder:(id<RDRawImageDecoder>)decoder {
