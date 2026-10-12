@@ -12,7 +12,7 @@
 - (void) testD200RawSpeed {
   NSString *resource = @"Nikon D200 Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -73,7 +73,7 @@
 - (void) testD200LibRaw {
   NSString *resource = @"Nikon D200 Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -133,7 +133,7 @@
 - (void) testD800ERawSpeed {
   NSString *resource = @"Nikon D800E Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -194,7 +194,7 @@
 - (void) testD800ELibRaw {
   NSString *resource = @"Nikon D800E Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -254,7 +254,7 @@
 - (void) testD810RawSpeed {
   NSString *resource = @"Nikon D810 Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -315,7 +315,7 @@
 - (void) testD810LibRaw {
   NSString *resource = @"Nikon D810 Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -375,7 +375,7 @@
 - (void) testD850RawSpeed {
   NSString *resource = @"Nikon D850 Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -436,7 +436,7 @@
 - (void) testD850LibRaw {
   NSString *resource = @"Nikon D850 Raw Image 1";
   NSString *extension = @"NEF";
-  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -548,7 +548,7 @@
 - (void) testILCE1RawSpeed {
   NSString *resource = @"Sony ILCE-1 Raw Image 1";
   NSString *extension = @"ARW";
-  id<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDRawSpeedDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -609,7 +609,7 @@
 - (void) testILCE1LibRaw {
   NSString *resource = @"Sony ILCE-1 Raw Image 1";
   NSString *extension = @"ARW";
-  id<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
+  Class<RDRawImageDecoder> decoder = [RDLibRawDecoder self];
   id<RDRawImage> rawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                        withExtension:extension
                                                          withDecoder:decoder];
@@ -746,11 +746,11 @@
   NSURL *url = [RawDecoderTestUtils urlForResource:@"Nikon D850 Raw Image 1" withExtension:@"NEF"];
   for (Class decoder in @[[RDLibRawDecoder class], [RDRawSpeedDecoder class]]) {
     NSMutableData *data = [NSMutableData dataWithContentsOfURL:url];
-    id<RDRawImage> fromData = [(id<RDRawImageDecoder>)decoder decodeRawImageFromData:data error:NULL];
+    id<RDRawImage> fromData = [(Class<RDRawImageDecoder>)decoder decodeRawImageFromData:data error:NULL];
     XCTAssertNotNil(fromData, @"%@", decoder);
     memset(data.mutableBytes, 0xA5, data.length);
     data = nil;
-    id<RDRawImage> fromURL = [(id<RDRawImageDecoder>)decoder decodeRawImageFromFileURL:url error:NULL];
+    id<RDRawImage> fromURL = [(Class<RDRawImageDecoder>)decoder decodeRawImageFromFileURL:url error:NULL];
     XCTAssertEqual(fromData.uncroppedHeight, fromURL.uncroppedHeight, @"%@", decoder);
     XCTAssertEqual(fromData.bytesPerRow, fromURL.bytesPerRow, @"%@", decoder);
     const size_t rowBytes = (size_t)(fromURL.uncroppedWidth * fromURL.bytesPerPixel);
@@ -769,7 +769,7 @@
 
 + (void) checkDecodeDataVersusURLForResource:(NSString *)resource
                                withExtension:(NSString *)extension
-                                     decoder:(id<RDRawImageDecoder>)decoder {
+                                     decoder:(Class<RDRawImageDecoder>)decoder {
   NSError *error;
   NSURL *fileUrl = [RawDecoderTestUtils urlForResource:resource
                                          withExtension:extension];

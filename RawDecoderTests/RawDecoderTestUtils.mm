@@ -20,7 +20,7 @@
 }
 
 + (id<RDRawImage>) rawImageAtPixlsFilePath:(NSString *)pixlsFilePath
-                               withDecoder:(id<RDRawImageDecoder>)decoder {
+                               withDecoder:(Class<RDRawImageDecoder>)decoder {
   NSString *rawFilePath = [NSString stringWithFormat:@"%@/%@", [RawDecoderTestUtils rawPixlsDataPath], pixlsFilePath];
   NSURL *rawFileUrl = [NSURL fileURLWithPath:rawFilePath
                                  isDirectory:false];
@@ -30,7 +30,7 @@
 
 + (id<RDRawImage>) rawImageForResource:(NSString *)resource
                          withExtension:(NSString *)extension
-                           withDecoder:(id<RDRawImageDecoder>)decoder {
+                           withDecoder:(Class<RDRawImageDecoder>)decoder {
   NSURL *rawFileUrl = [RawDecoderTestUtils urlForResource:resource
                                             withExtension:extension];
   return [RawDecoderTestUtils rawImageAtURL:rawFileUrl
@@ -47,7 +47,7 @@
 }
 
 + (id<RDRawImage>) rawImageAtURL:(NSURL *)rawFileUrl
-                     withDecoder:(id<RDRawImageDecoder>)decoder {
+                     withDecoder:(Class<RDRawImageDecoder>)decoder {
   XCTAssertNotNil(rawFileUrl, @"Couldn't find file at %@", [rawFileUrl path]);
   NSError *error;
   id<RDRawImage>rawImage = [decoder decodeRawImageFromFileURL:rawFileUrl

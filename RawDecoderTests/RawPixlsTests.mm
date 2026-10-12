@@ -813,7 +813,7 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
 }
 
 + (void)testDecodingOfFilesWithExtension:(NSString *)fileExtension
-                             withDecoder:(id<RDRawImageDecoder>)decoder {
+                             withDecoder:(Class<RDRawImageDecoder>)decoder {
   [self testDecodingOfFilesWithExtension:fileExtension
                              inDirectory:@""
                              withDecoder:decoder];
@@ -821,7 +821,7 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
 
 + (void)testDecodingOfFilesWithExtension:(NSString *)fileExtension
                              inDirectory:(NSString *)directory
-                             withDecoder:(id<RDRawImageDecoder>)decoder {
+                             withDecoder:(Class<RDRawImageDecoder>)decoder {
   if ([directory length] == 0) {
     NSLog(@"Testing decoding of files with extension %@", fileExtension);
   } else {
@@ -877,8 +877,8 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
 /// filtered to them
 + (void)checkInvariantsOfRawImage:(id<RDRawImage>)rawImage
                              path:(NSString *)path
-                          decoder:(id<RDRawImageDecoder>)decoder {
-  NSString *who = [NSString stringWithFormat:@"%@ %@", NSStringFromClass((Class)decoder), path];
+                          decoder:(Class<RDRawImageDecoder>)decoder {
+  NSString *who = [NSString stringWithFormat:@"%@ %@", NSStringFromClass(decoder), path];
 
   // Geometry: the crop lies inside the uncropped image (review B1)
   XCTAssertGreaterThan(rawImage.width, 0, @"invariant width > 0: %@", who);
