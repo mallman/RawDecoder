@@ -19,13 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id<RDRawImage>) rawImageForResource:(NSString *)resource
                          withExtension:(NSString *)extension
-                      correctRawValues:(bool)correctRawValues;
+                      correctRawValues:(BOOL)correctRawValues;
 
 + (id<RDRawImage>) rawImageAtURL:(NSURL *)rawFileUrl
                      withDecoder:(id<RDRawImageDecoder>)decoder;
 
 + (id<RDRawImage>) rawImageAtURL:(NSURL *)rawFileUrl
-                correctRawValues:(bool)correctRawValues;
+                correctRawValues:(BOOL)correctRawValues;
 @end
 
 NS_ASSUME_NONNULL_END

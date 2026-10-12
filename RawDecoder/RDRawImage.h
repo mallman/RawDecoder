@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// image will be made explicit. For example, the height of the cropped image is specified by the
 /// `height` property. The height of the uncropped image is specified by the `uncroppedHeight`
 /// property
-@protocol RDRawImage
+@protocol RDRawImage <NSObject>
 
 /// An upper bound on the values of the decoded pixels. This will be at most 16, and is typically
 /// 14—or 12 for older cameras. To be precise, this value is equal to

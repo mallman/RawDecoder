@@ -39,7 +39,7 @@
 
 + (id<RDRawImage>) rawImageForResource:(NSString *)resource
                          withExtension:(NSString *)extension
-                      correctRawValues:(bool)correctRawValues {
+                      correctRawValues:(BOOL)correctRawValues {
   NSURL *rawFileUrl = [RawDecoderTestUtils urlForResource:resource
                                             withExtension:extension];
   return [RawDecoderTestUtils rawImageAtURL:rawFileUrl
@@ -57,7 +57,7 @@
 }
 
 + (id<RDRawImage>) rawImageAtURL:(NSURL *)rawFileUrl
-                correctRawValues:(bool)correctRawValues {
+                correctRawValues:(BOOL)correctRawValues {
   XCTAssertNotNil(rawFileUrl, @"Couldn't find file at %@", [rawFileUrl path]);
   NSError *error;
   id<RDRawImage>rawImage = [RDRawSpeedDecoder decodeRawImageFromFileURL:rawFileUrl

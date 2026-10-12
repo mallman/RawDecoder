@@ -7,15 +7,15 @@
 #import <RawSpeed-API.h>
 
 @implementation RDRawSpeedDecoder
-+ (id<RDRawImage> _Nullable)decodeRawImageFromData:(nonnull const NSData *)data
++ (id<RDRawImage> _Nullable)decodeRawImageFromData:(nonnull NSData *)data
                                              error:(NSError * _Nullable __autoreleasing *)error {
   return [self decodeRawImageFromData:data
-                     correctRawValues:true
+                     correctRawValues:YES
                                 error:error];
 }
 
-+ (id<RDRawImage> _Nullable) decodeRawImageFromData:(const NSData *)data
-                                   correctRawValues:(bool)correctRawValues
++ (id<RDRawImage> _Nullable) decodeRawImageFromData:(NSData *)data
+                                   correctRawValues:(BOOL)correctRawValues
                                               error:(NSError * _Nullable __autoreleasing *)error {
   try {
     auto buffer = new rawspeed::Buffer((const uint8_t *)data.bytes, (uint32_t) data.length);
@@ -29,15 +29,15 @@
   }
 }
 
-+ (id<RDRawImage> _Nullable)decodeRawImageFromFileURL:(nonnull const NSURL *)fileURL
++ (id<RDRawImage> _Nullable)decodeRawImageFromFileURL:(nonnull NSURL *)fileURL
                                                 error:(NSError * _Nullable __autoreleasing *)error {
   return [self decodeRawImageFromFileURL:fileURL
-                        correctRawValues:true
+                        correctRawValues:YES
                                    error:error];
 }
 
-+ (id<RDRawImage> _Nullable) decodeRawImageFromFileURL:(const NSURL *)fileURL
-                                      correctRawValues:(bool)correctRawValues
++ (id<RDRawImage> _Nullable) decodeRawImageFromFileURL:(NSURL *)fileURL
+                                      correctRawValues:(BOOL)correctRawValues
                                                  error:(NSError * _Nullable __autoreleasing *)error {
   try {
     const char *filename = [[fileURL path] UTF8String];
@@ -55,7 +55,7 @@
 }
 
 + (RawSpeedRawImage * _Nullable) fromBuffer:(const rawspeed::Buffer *)buffer
-                           correctRawValues:(bool)correctRawValues
+                           correctRawValues:(BOOL)correctRawValues
                                       error:(NSError * _Nullable __autoreleasing *)error {
   rawspeed::RawParser parser(*buffer);
   const rawspeed::CameraMetaData *meta = cameraMetaData();

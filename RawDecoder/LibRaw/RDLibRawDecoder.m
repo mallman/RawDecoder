@@ -8,7 +8,7 @@
 
 @implementation RDLibRawDecoder
 
-+ (id<RDRawImage> _Nullable)decodeRawImageFromData:(nonnull const NSData *)data
++ (id<RDRawImage> _Nullable)decodeRawImageFromData:(nonnull NSData *)data
                                              error:(NSError * _Nullable __autoreleasing *)error {
   libraw_data_t *librawData = libraw_init(0);
   LibRawExifCapture *exif = [LibRawExifCapture new];
@@ -30,7 +30,7 @@
   return rawImage;
 }
 
-+ (id<RDRawImage> _Nullable)decodeRawImageFromFileURL:(nonnull const NSURL *)fileURL
++ (id<RDRawImage> _Nullable)decodeRawImageFromFileURL:(nonnull NSURL *)fileURL
                                                 error:(NSError * _Nullable __autoreleasing *)error {
   libraw_data_t *librawData = libraw_init(0);
   const char *rawFilePath = [[fileURL path] UTF8String];

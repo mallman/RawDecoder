@@ -497,7 +497,7 @@
   id<RDRawImage> rawImage = [RawDecoderTestUtils
                              rawImageForResource:@"Nikon D850 Raw Image 1"
                              withExtension:@"NEF"
-                             correctRawValues:false]; // The "uncorrected" RawSpeed values match the LibRaw values
+                             correctRawValues:NO]; // The "uncorrected" RawSpeed values match the LibRaw values
   [RawDecoderTests testD850RawImageValuesWithRawImage:rawImage];
 }
 
@@ -541,7 +541,7 @@
 - (void) testD850RawSpeedVersusLibRaw {
   [RawDecoderTests checkRawSpeedVersusLibRawForResource:@"Nikon D850 Raw Image 1"
                                           withExtension:@"NEF"
-                                       correctRawValues:false
+                                       correctRawValues:NO
                                               tolerance:0];
 }
 
@@ -713,16 +713,13 @@
 - (void) testILCE1RawSpeedVersusLibRaw {
   [RawDecoderTests checkRawSpeedVersusLibRawForResource:@"Sony ILCE-1 Raw Image 1"
                                           withExtension:@"ARW"
-                                       correctRawValues:true
+                                       correctRawValues:YES
                                               tolerance:2];
 }
 
 - (void) testErrorsOnUndecodableData {
-  NSMutableData *garbageBytes = [NSMutableData dataWithLength:4096];
-  memset(garbageBytes.mutableBytes, 0x5A, garbageBytes.length);
-  // An immutable copy: the decode methods take `const NSData *`, which Objective-C++ will
-  // not accept an NSMutableData for (review item A1)
-  NSData *garbage = [garbageBytes copy];
+  NSMutableData *garbage = [NSMutableData dataWithLength:4096];
+  memset(garbage.mutableBytes, 0x5A, garbage.length);
 
   // A NULL error pointer is legal and must not crash
   XCTAssertNil([RDLibRawDecoder decodeRawImageFromData:garbage error:NULL]);
@@ -775,7 +772,7 @@
 
 + (void) checkRawSpeedVersusLibRawForResource:(NSString *)resource
                                 withExtension:(NSString *)extension
-                             correctRawValues:(bool)correctRawValues
+                             correctRawValues:(BOOL)correctRawValues
                                     tolerance:(int)tolerance {
   id<RDRawImage> rdRawImage = [RawDecoderTestUtils rawImageForResource:resource
                                                          withExtension:extension
