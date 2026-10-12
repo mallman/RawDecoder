@@ -754,7 +754,23 @@
                                                              error:&error];
   id<RDRawImage>rawImageFromURL = [decoder decodeRawImageFromFileURL:fileUrl
                                                                error:&error];
-  XCTAssert(memcmp(rawImageFromData.uncroppedImageData, rawImageFromURL.uncroppedImageData, rawImageFromURL.uncroppedHeight * rawImageFromURL.bytesPerRow) == 0);
+  XCTAssertEqual(rawImageFromData.uncroppedWidth, rawImageFromURL.uncroppedWidth);
+  XCTAssertEqual(rawImageFromData.uncroppedHeight, rawImageFromURL.uncroppedHeight);
+  XCTAssertEqual(rawImageFromData.bytesPerRow, rawImageFromURL.bytesPerRow);
+  // Compare row by row over the pixels only. Rows may be padded to an alignment boundary
+  // (RawSpeed pads to 16 bytes) and the padding is uninitialised, so comparing whole
+  // bytesPerRow spans makes the result depend on leftover heap contents
+  const size_t rowBytes = (size_t)(rawImageFromURL.uncroppedWidth * rawImageFromURL.bytesPerPixel);
+  const size_t pitch = (size_t)rawImageFromURL.bytesPerRow;
+  const uint8_t *dataBytes = (const uint8_t *)rawImageFromData.uncroppedImageData;
+  const uint8_t *urlBytes = (const uint8_t *)rawImageFromURL.uncroppedImageData;
+  NSInteger mismatchedRows = 0;
+  for (NSInteger row = 0; row < rawImageFromURL.uncroppedHeight; row++) {
+    if (memcmp(dataBytes + row * pitch, urlBytes + row * pitch, rowBytes) != 0) {
+      mismatchedRows++;
+    }
+  }
+  XCTAssertEqual(mismatchedRows, 0);
 }
 
 + (void) checkRawSpeedVersusLibRawForResource:(NSString *)resource
