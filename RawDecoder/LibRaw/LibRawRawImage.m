@@ -104,8 +104,14 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
     metadata = [[RDRawImageMetadata alloc] initFromLibrawData:librawData
                                                       exifMake:exifMake
                                                      exifModel:exifModel];
+    // linear_max is the white level from the file's own metadata, and LibRaw sets it to 0
+    // when the file has none (many RAF, SRW and SR2 files, and DNGs whose opcodes LibRaw
+    // applies). Fall back to maximum, LibRaw's per-camera or data-derived ceiling
     whitePoint = librawData->color.linear_max[0];
-    bitsPerSample = (uint16_t)ceil(log2(whitePoint));
+    if (whitePoint <= 0) {
+      whitePoint = librawData->color.maximum;
+    }
+    bitsPerSample = whitePoint > 0 ? (uint16_t)ceil(log2(whitePoint)) : 0;
   }
   return self;
 }

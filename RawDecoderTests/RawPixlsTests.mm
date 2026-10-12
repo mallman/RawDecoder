@@ -582,6 +582,22 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   XCTAssertEqualObjects(metadata.canonicalCameraAlias, @"DSC-R1");
 }
 
+/// This SR2 carries no linear_max, so LibRaw's white point must come from its fallback
+/// rather than being 0. RawSpeed reports 16383 for the same file
+- (void)testSonyDSCR1WhitePointWithLibRaw {
+  id<RDRawImage> rawImage = [RawDecoderTestUtils
+                             rawImageAtPixlsFilePath:@"Sony/DSC-R1/_DSC1477.SR2"
+                             withDecoder:[RDLibRawDecoder self]];
+  if (rawImage == nil) {
+    return;
+  }
+
+  XCTAssertEqual(rawImage.whitePoint, 16383);
+  XCTAssertEqual(rawImage.bitsPerSample, 14);
+  XCTAssertEqual(rawImage.blackLevel, 511);
+  XCTAssertGreaterThan(rawImage.whitePoint, rawImage.blackLevel);
+}
+
 /// CIFF-based CRW files carry no TIFF Make/Model tags. LibRaw can only offer its rewritten
 /// strings, so the LibRaw decoder returns nil; RawSpeed reads CIFF's own make/model record.
 /// The canonical fields agree regardless
