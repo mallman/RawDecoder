@@ -85,11 +85,11 @@
   XCTAssertEqual(rawImage.bytesPerPixel, 2);
   XCTAssertEqual(rawImage.componentsPerPixel, 1);
 
-  XCTAssertEqual(rawImage.cropOriginX, 0);
+  XCTAssertEqual(rawImage.cropOriginX, 2);
   XCTAssertEqual(rawImage.cropOriginY, 0);
   XCTAssertEqual(rawImage.width, 3899);
   XCTAssertEqual(rawImage.height, 2616);
-  XCTAssertEqual(rawImage.uncroppedWidth, 3899);
+  XCTAssertEqual(rawImage.uncroppedWidth, 3904);
   XCTAssertEqual(rawImage.uncroppedHeight, 2616);
 
   NSArray<NSNumber*> *expectedExifCFAPattern = @[
@@ -210,7 +210,7 @@
   XCTAssertEqual(rawImage.cropOriginY, 0);
   XCTAssertEqual(rawImage.width, 7378);
   XCTAssertEqual(rawImage.height, 4924);
-  XCTAssertEqual(rawImage.uncroppedWidth, 7378);
+  XCTAssertEqual(rawImage.uncroppedWidth, 7424);
   XCTAssertEqual(rawImage.uncroppedHeight, 4924);
 
   NSArray<NSNumber*> *expectedExifCFAPattern = @[
@@ -625,7 +625,7 @@
   XCTAssertEqual(rawImage.cropOriginY, 12);
   XCTAssertEqual(rawImage.width, 8640);
   XCTAssertEqual(rawImage.height, 5760);
-  XCTAssertEqual(rawImage.uncroppedWidth, 8660);
+  XCTAssertEqual(rawImage.uncroppedWidth, 8672);
   XCTAssertEqual(rawImage.uncroppedHeight, 5784);
 
   XCTAssertEqual([rawImage colorAtX:0 y:0], RDCFAColorRed);

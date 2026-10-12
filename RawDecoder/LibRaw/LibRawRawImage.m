@@ -14,10 +14,29 @@
                          exifModel:(NSString * _Nullable)exifModel;
 @end
 
-RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, long y);
+RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long visibleCol, long visibleRow);
+
+/// LibRaw indexes colors (FC, fcol) and black patterns in coordinates relative to its visible
+/// area, which starts at (left_margin, top_margin) of the raw buffer. The wrapper's cropped
+/// coordinates start at (cropOriginX, cropOriginY). Converting adds cropOrigin - margin, which
+/// can be negative; LibRaw's color periods are 2, 6, 8 and 16, so a negative value is moved up
+/// by a multiple of 48 without changing the result
+static long librawVisibleCoordinate(NSInteger cropped, NSInteger offset) {
+  NSInteger v = cropped + offset;
+  return (long)(v >= 0 ? v : v % 48 + 48);
+}
+
+/// Non-negative v mod period, for indexing LibRaw's black-level pattern
+static unsigned positiveMod(NSInteger v, unsigned period) {
+  NSInteger r = v % (NSInteger)period;
+  return (unsigned)(r < 0 ? r + period : r);
+}
 
 @interface LibRawRawImage ()
 @property (readonly, direct) libraw_data_t *librawData;
+/// cropOrigin - margin: added to a cropped coordinate to get LibRaw's visible-area coordinate
+@property (readonly, direct) NSInteger visibleOffsetX;
+@property (readonly, direct) NSInteger visibleOffsetY;
 @end
 
 @implementation LibRawRawImage
@@ -61,54 +80,75 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
       return nil;
     }
     _librawData = librawData;
-    // LibRaw's black level for a pixel is black + cblack[color] + the pattern entry
-    // cblack[6 + (row % cblack[4]) * cblack[5] + (col % cblack[5])] when a pattern is present.
-    // Evaluate it at the 2x2 positions in the same coordinates the cfa is built from
-    const unsigned *cblack = librawData->color.cblack;
-    const unsigned patternRows = cblack[4], patternCols = cblack[5];
-    NSMutableArray<NSNumber *> *levels = [NSMutableArray arrayWithCapacity:4];
-    for (int y = 0; y < 2; y++) {
-      for (int x = 0; x < 2; x++) {
-        int color = libraw_COLOR(librawData, y, x);
-        unsigned level = librawData->color.black + (color >= 0 && color < 4 ? cblack[color] : 0);
-        if (patternRows > 0 && patternCols > 0) {
-          level += cblack[6 + (y % patternRows) * patternCols + (x % patternCols)];
-        }
-        [levels addObject:@(level)];
-      }
+    const libraw_image_sizes_t *sizes = &librawData->sizes;
+
+    // Uncropped is the whole raw buffer, which is what uncroppedImageData points at. LibRaw's
+    // width/height are its visible area, not the buffer (review B1)
+    uncroppedWidth = sizes->raw_width;
+    uncroppedHeight = sizes->raw_height;
+    uncroppedImageData = librawData->rawdata.raw_image;
+
+    // Crop: the vendor inset crop when LibRaw considers it usable, using LibRaw's own rule from
+    // adjust_to_raw_inset_crop: an origin of 0xFFFF means "unknown" (many Sony ARW files report
+    // a size with an unknown origin), and the crop must lie inside the raw buffer (review B13).
+    // Otherwise the visible area, which starts at the margins
+    const libraw_raw_inset_crop_t *inset = &sizes->raw_inset_crops[0];
+    BOOL insetUsable = inset->cwidth > 0 && inset->cheight > 0
+        && inset->cleft < 0xffff && inset->ctop < 0xffff
+        && (NSInteger)inset->cleft + inset->cwidth <= (NSInteger)sizes->raw_width
+        && (NSInteger)inset->ctop + inset->cheight <= (NSInteger)sizes->raw_height;
+    if (insetUsable) {
+      cropOriginX = inset->cleft;
+      cropOriginY = inset->ctop;
+      width = inset->cwidth;
+      height = inset->cheight;
+    } else {
+      cropOriginX = sizes->left_margin;
+      cropOriginY = sizes->top_margin;
+      width = MIN((NSInteger)sizes->width, (NSInteger)sizes->raw_width - cropOriginX);
+      height = MIN((NSInteger)sizes->height, (NSInteger)sizes->raw_height - cropOriginY);
     }
-    componentBlackLevels = levels;
-    blackLevel = [[NSSet setWithArray:levels] count] == 1 ? levels[0] : nil;
+    if (width <= 0 || height <= 0) {
+      RDSetError(error, RDErrorCodeDecodeFailed, @"LibRaw reported no usable image area", nil);
+      _librawData = NULL;
+      return nil;
+    }
+    _visibleOffsetX = cropOriginX - sizes->left_margin;
+    _visibleOffsetY = cropOriginY - sizes->top_margin;
+
     // We'll assume 2
     bytesPerPixel = 2;
-    bytesPerRow = librawData->sizes.raw_pitch;
-    RDCFAColor *cfaColors = (RDCFAColor *)malloc(sizeof(RDCFAColor) * 4);
-    for (int y = 0; y < 2; y++) {
-      for (int x = 0; x < 2; x++) {
-        cfaColors[x + y * 2] = libRawImageColorWithLibrawDataAt(librawData, x, y);
+    bytesPerRow = sizes->raw_pitch;
+    imageData = &librawData->rawdata.raw_image[cropOriginX + cropOriginY * bytesPerRow / 2];
+
+    // CFA and black levels at the 2x2 tile at the crop origin, in LibRaw's visible frame (B4).
+    // LibRaw's black level for a pixel is black + cblack[color] + the pattern entry
+    // cblack[6 + (row % cblack[4]) * cblack[5] + (col % cblack[5])] when a pattern is present
+    const unsigned *cblack = librawData->color.cblack;
+    const unsigned patternRows = cblack[4], patternCols = cblack[5];
+    RDCFAColor cfaColors[4];
+    NSMutableArray<NSNumber *> *levels = [NSMutableArray arrayWithCapacity:4];
+    for (NSInteger y = 0; y < 2; y++) {
+      for (NSInteger x = 0; x < 2; x++) {
+        long visibleCol = librawVisibleCoordinate(x, _visibleOffsetX);
+        long visibleRow = librawVisibleCoordinate(y, _visibleOffsetY);
+        cfaColors[x + y * 2] = libRawImageColorWithLibrawDataAt(librawData, visibleCol, visibleRow);
+        int color = libraw_COLOR(librawData, (int)visibleRow, (int)visibleCol);
+        unsigned level = librawData->color.black + (color >= 0 && color < 4 ? cblack[color] : 0);
+        if (patternRows > 0 && patternCols > 0) {
+          level += cblack[6 + positiveMod(y + _visibleOffsetY, patternRows) * patternCols
+                            + positiveMod(x + _visibleOffsetX, patternCols)];
+        }
+        [levels addObject:@(level)];
       }
     }
     cfa = [[RDCFA alloc] initWithCFAColors:cfaColors
                                      width:2
                                     height:2];
-    free(cfaColors);
+    componentBlackLevels = levels;
+    blackLevel = [[NSSet setWithArray:levels] count] == 1 ? levels[0] : nil;
     // We'll assume 1
     componentsPerPixel = 1;
-    uncroppedHeight = librawData->sizes.height;
-    uncroppedWidth = librawData->sizes.width;
-    if (librawData->sizes.raw_inset_crops[0].cheight == 0) {
-      cropOriginX = 0;
-      cropOriginY = 0;
-      height = uncroppedHeight;
-      width = uncroppedWidth;
-    } else {
-      cropOriginX = librawData->sizes.raw_inset_crops[0].cleft;
-      cropOriginY = librawData->sizes.raw_inset_crops[0].ctop;
-      height = librawData->sizes.raw_inset_crops[0].cheight;
-      width = librawData->sizes.raw_inset_crops[0].cwidth;
-    }
-    imageData = &librawData->rawdata.raw_image[cropOriginX + cropOriginY * bytesPerRow / 2];
-    uncroppedImageData = librawData->rawdata.raw_image;
     metadata = [[RDRawImageMetadata alloc] initFromLibrawData:librawData
                                                       exifMake:exifMake
                                                      exifModel:exifModel];
@@ -142,9 +182,9 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
 
 @end
 
-RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, long y) {
+RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long visibleCol, long visibleRow) {
   RDCFAColor color;
-  int librawColor = libraw_COLOR(librawData, (int)y, (int)x);
+  int librawColor = libraw_COLOR(librawData, (int)visibleRow, (int)visibleCol);
   switch (librawColor) {
     case 0: // R
       color = RDCFAColorRed;
@@ -166,7 +206,9 @@ RDCFAColor libRawImageColorWithLibrawDataAt(libraw_data_t *librawData, long x, l
 }
 
 RDCFAColor libRawRawImageColorAt(LibRawRawImage *__unsafe_unretained rawImage, NSInteger x, NSInteger y) {
-  return libRawImageColorWithLibrawDataAt(rawImage.librawData, x, y);
+  return libRawImageColorWithLibrawDataAt(rawImage.librawData,
+                                          librawVisibleCoordinate(x, rawImage.visibleOffsetX),
+                                          librawVisibleCoordinate(y, rawImage.visibleOffsetY));
 }
 
 uint16_t libRawRawImageValueAt(LibRawRawImage *__unsafe_unretained rawImage, NSInteger row, NSInteger col) {

@@ -512,8 +512,8 @@ static NSSet<NSString *> *knownFailingRawSpeedFiles = [NSSet setWithArray: @[
   XCTAssertEqual(rawImage.cropOriginY, 108);
   XCTAssertEqual(rawImage.width, 6000);
   XCTAssertEqual(rawImage.height, 4000);
-  XCTAssertEqual(rawImage.uncroppedWidth, 5999);
-  XCTAssertEqual(rawImage.uncroppedHeight, 3999);
+  XCTAssertEqual(rawImage.uncroppedWidth, 6188);
+  XCTAssertEqual(rawImage.uncroppedHeight, 4120);
 
   XCTAssertEqual([rawImage colorAtX:0 y:0], RDCFAColorRed);
   XCTAssertEqual([rawImage colorAtX:1 y:0], RDCFAColorGreen);
